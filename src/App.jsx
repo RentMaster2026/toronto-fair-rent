@@ -237,6 +237,7 @@ export default function App() {
     supabase
       .from("rent_submissions")
       .select("*", { count: "exact", head: true })
+      .eq("city", "toronto")
       .then(({ count, error }) => {
         if (!error) setRealCount(count || 0);
         setCountLoaded(true);
