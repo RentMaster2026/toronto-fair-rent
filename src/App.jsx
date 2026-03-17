@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
+import NeighbourhoodPage from "./NeighbourhoodPage";
+import { TORONTO_HOODS, TORONTO_CITY } from "./hoodData";
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -248,6 +250,7 @@ export default function App() {
   const [rawCount,    setRawCount]    = useState(0);
   const [countLoaded, setCountLoaded] = useState(false);
   const displayCount = useCountUp(countLoaded ? rawCount : 0);
+  const [showHood, setShowHood] = useState(null);
   const copyRef = useRef(null);
 
   useEffect(()=>{
@@ -366,6 +369,14 @@ export default function App() {
     : communityN>=5 ? `Blended — ${communityN} submissions + CMHC`
     : "CMHC baseline";
 
+  if (showHood) return (
+    <NeighbourhoodPage
+      hood={TORONTO_HOODS[showHood]}
+      city={TORONTO_CITY}
+      onBack={() => { setShowHood(null); window.scrollTo(0,0); }}
+    />
+  );
+
   return (
     <><style>{CSS}</style>
     <div style={{minHeight:"100vh"}}>
@@ -399,6 +410,17 @@ export default function App() {
               <p style={{fontSize:15,color:"var(--t2)",lineHeight:1.7,maxWidth:440}}>
                 Check if your Toronto rent is fair. Based on CMHC data and real renter submissions. Free. Anonymous. No account needed.
               </p>
+            </div>
+
+            <div style={{marginBottom:28}}>
+              <div style={{fontFamily:"var(--mono)",fontSize:10,color:"var(--t3)",textTransform:"uppercase",letterSpacing:".1em",marginBottom:12}}>Browse by neighbourhood</div>
+              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                {Object.keys(TORONTO_HOODS).map(slug=>(
+                  <button key={slug} onClick={()=>setShowHood(slug)} style={{padding:"6px 14px",background:"var(--bg-card)",border:"1px solid var(--border)",borderRadius:100,fontFamily:"var(--mono)",fontSize:11,color:"var(--t2)",cursor:"pointer",letterSpacing:".04em"}}>
+                    {TORONTO_HOODS[slug].name} →
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="card" style={{padding:"28px 24px",display:"flex",flexDirection:"column",gap:20}}>

@@ -1,0 +1,80 @@
+export const TORONTO_HOODS = {
+  libertyvillage: {
+    slug: "libertyvillage", name: "Liberty Village",
+    hoodMult: 1.12, vsAvgPct: 12,
+    description: "Liberty Village is a dense, young-professional neighbourhood in Toronto's west end, known for its converted loft buildings, tech offices, and walkable amenities.",
+    context: "Newer purpose-built towers near the King Street streetcar tend toward the higher end.",
+    nearbyHoods: ["Parkdale", "Queen West", "King West"],
+  },
+  leslieville: {
+    slug: "leslieville", name: "Leslieville",
+    hoodMult: 1.04, vsAvgPct: 4,
+    description: "Leslieville is a popular east-end neighbourhood known for its independent cafes, restaurants, and mix of Victorian homes and newer rental buildings.",
+    context: "Units closer to Queen Street East tend to command slightly higher rents.",
+    nearbyHoods: ["Riverside", "East End", "Distillery District"],
+  },
+  annex: {
+    slug: "annex", name: "Annex",
+    hoodMult: 1.10, vsAvgPct: 10,
+    description: "The Annex is a historic, tree-lined neighbourhood near the University of Toronto, popular with students, academics, and young professionals.",
+    context: "Proximity to U of T and Bloor Street drives strong year-round rental demand.",
+    nearbyHoods: ["Yorkville", "Midtown", "Davisville"],
+  },
+  queenswest: {
+    slug: "queenswest", name: "Queen West",
+    hoodMult: 1.15, vsAvgPct: 15,
+    description: "Queen West is one of Toronto's most vibrant neighbourhoods, known for its arts scene, boutiques, and nightlife. It commands a significant premium over the city average.",
+    context: "Units on quieter side streets north of Queen offer slightly better value.",
+    nearbyHoods: ["Parkdale", "Liberty Village", "Kensington Market"],
+  },
+  yorkville: {
+    slug: "yorkville", name: "Yorkville",
+    hoodMult: 1.30, vsAvgPct: 30,
+    description: "Yorkville is Toronto's most prestigious neighbourhood, home to luxury condos, high-end retail, and some of the city's highest rents.",
+    context: "This is consistently one of the most expensive rental markets in Canada.",
+    nearbyHoods: ["Annex", "Midtown", "Forest Hill"],
+  },
+  northyork: {
+    slug: "northyork", name: "North York",
+    hoodMult: 0.90, vsAvgPct: -10,
+    description: "North York offers a mix of suburban and urban living with good transit access via the Yonge-University subway line. Rents are meaningfully below the downtown core.",
+    context: "Proximity to subway stations drives rent premiums within North York itself.",
+    nearbyHoods: ["Willowdale", "Lawrence Park", "Midtown"],
+  },
+  scarborough: {
+    slug: "scarborough", name: "Scarborough",
+    hoodMult: 0.82, vsAvgPct: -18,
+    description: "Scarborough is Toronto's most affordable major district, offering significantly lower rents than the downtown core while still connected by the Bloor-Danforth subway.",
+    context: "Rents are well below the city average, making Scarborough one of Toronto's best value options.",
+    nearbyHoods: ["East End", "North York", "East York"],
+  },
+  distillery: {
+    slug: "distillery", name: "Distillery District",
+    hoodMult: 1.20, vsAvgPct: 20,
+    description: "The Distillery District is a historic neighbourhood of converted Victorian industrial buildings now housing condos, restaurants, and galleries.",
+    context: "Premium finishes and historic character push rents toward the higher end of the city.",
+    nearbyHoods: ["St. Lawrence", "Leslieville", "Riverside"],
+  },
+  parkdale: {
+    slug: "parkdale", name: "Parkdale",
+    hoodMult: 0.93, vsAvgPct: -7,
+    description: "Parkdale is a diverse, evolving neighbourhood in Toronto's west end with a strong arts community and a mix of older walk-up apartments and newer builds.",
+    context: "Rents are slightly below the city average, offering relative value close to downtown.",
+    nearbyHoods: ["Queen West", "Liberty Village", "Roncesvalles"],
+  },
+  stlawrence: {
+    slug: "stlawrence", name: "St. Lawrence",
+    hoodMult: 1.09, vsAvgPct: 9,
+    description: "St. Lawrence is a well-established downtown neighbourhood known for the St. Lawrence Market, strong walkability, and a mix of condo and rental buildings.",
+    context: "Central location and market proximity make this a consistently high-demand area.",
+    nearbyHoods: ["Distillery District", "Leslieville", "Financial District"],
+  },
+};
+
+export const TORONTO_CITY = {
+  key: "toronto", name: "Toronto", province: "Ontario",
+  accent: "#2563eb", accentLight: "#eff6ff", accentBorder: "#bfdbfe",
+  calcUrl: "https://torontofairrent.ca",
+  bases: { bachelor:1800, "1br":2400, "2br":3100, "3br":3900, "3plus":4800 },
+  inflation: 0.040, rentControlled: true,
+};
