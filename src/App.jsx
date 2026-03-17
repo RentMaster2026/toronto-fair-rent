@@ -23,18 +23,15 @@ const INFLATION       = 0.040;
 
 const BASES = { bachelor:1800, "1br":2400, "2br":3100, "3br":3900, "3plus":4800 };
 const HOODS = {
-  "Alta Vista":0.95,"Barrhaven":0.92,"Bayshore / Britannia":0.96,
-  "Beacon Hill":0.93,"Blackburn Hamlet":0.91,"Byward Market":1.18,
-  "Carlington":0.88,"Centretown":1.08,"Chinatown / Lebreton":1.02,
-  "Downtown Core":1.15,"Elmvale Acres":0.90,"Findlay Creek":0.89,
-  "Gatineau (QC side)":0.82,"Glebe":1.20,"Greenboro":0.88,
-  "Hintonburg":1.10,"Kanata":0.97,"Little Italy":1.07,
-  "Lowertown":1.00,"Manor Park":1.06,"Manotick":0.94,
-  "Nepean":0.93,"New Edinburgh":1.16,"Old Ottawa South":1.05,
-  "Orleans":0.90,"Overbrook":0.90,"Queensway Terrace":0.94,
-  "Rideau-Vanier":0.87,"Riverside South":0.91,"Rockcliffe Park":1.28,
-  "Sandy Hill":1.04,"Stittsville":0.89,"Vanier":0.85,
-  "Wellington Village":1.12,"Westboro":1.18,
+  "Annex":1.10,"Bloorcourt":1.00,"Chinatown":0.95,"Davisville":1.08,
+  "Distillery District":1.20,"Downtown Core":1.18,"East End":0.94,
+  "East York":0.92,"Etobicoke":0.87,"Forest Hill":1.32,"Greektown":1.02,
+  "Junction":0.97,"Kensington Market":0.96,"Lawrence Park":1.25,
+  "Leaside":1.14,"Leslieville":1.04,"Liberty Village":1.12,
+  "Little Italy":1.05,"Midtown":1.07,"North York":0.90,"Parkdale":0.93,
+  "Queen West":1.15,"Riverside":1.01,"Rosedale":1.35,"Scarborough":0.82,
+  "St. Lawrence":1.09,"Swansea":1.03,"Weston":0.86,"Willowdale":0.89,
+  "Yorkville":1.30,
 };
 const ADDONS = { parking:250, utilities:120 };
 const GUIDELINES = {
@@ -52,12 +49,12 @@ const UNITS = [
 ];
 const NEIGHBORHOODS = Object.keys(HOODS).sort((a,b) => a.localeCompare(b));
 const MARKET_SNAPSHOT = [
-  { label:"1-bedroom median",        val:"$1,945" },
-  { label:"2-bedroom median",        val:"$2,490" },
-  { label:"Vacancy rate (2025)",     val:"3.1%"   },
+  { label:"1-bedroom median",        val:"$2,650" },
+  { label:"2-bedroom median",        val:"$3,440" },
+  { label:"Vacancy rate (2025)",     val:"1.7%"   },
   { label:"Rent control guideline",  val:"2.1% (2026)" },
-  { label:"Highest area",            val:"Rockcliffe Park" },
-  { label:"Most affordable area",    val:"Vanier" },
+  { label:"Highest area",            val:"Rosedale" },
+  { label:"Most affordable area",    val:"Scarborough" },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -128,8 +125,8 @@ const CSS = `
     --t1: #111111;
     --t2: #444444;
     --t3: #767676;
-    --accent: #1a3a7a;
-    --accent-bg: #f0f4f9;
+    --accent: ${ACCENT};
+    --accent-bg: ${ACCENT_BG};
     --nav-bg: #1c2b36;
     --bar-bg: #2f4553;
   }
