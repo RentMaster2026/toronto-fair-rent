@@ -347,7 +347,7 @@ function ResultPanel({ result, hood, unitType, onReset }) {
               <tr>
                 <td style={{ color:"var(--t2)" }}>
                   Neighbourhood adjustment<br/>
-                  <span style={{ fontSize:11, color:"var(--t3)" }}>{hood} &mdash; {bd.hoodMult>=1 ? "above" : "below"} city average ({((bd.hoodMult-1)*100).toFixed(0)}%)</span>
+                  <span style={{ fontSize:11, color:"var(--t3)" }}>{hood}: {bd.hoodMult>=1 ? "above" : "below"} city average ({((bd.hoodMult-1)*100).toFixed(0)}%)</span>
                 </td>
                 <td className={bd.hoodAdj>=0?"sign-pos":"sign-neg"}>
                   {bd.hoodAdj>=0?"+":""}{fmt(bd.hoodAdj)}
@@ -368,7 +368,7 @@ function ResultPanel({ result, hood, unitType, onReset }) {
                 <td style={{ color:"var(--t2)" }}>
                   Local renter data<br/>
                   <span style={{ fontSize:11, color:"var(--t3)" }}>
-                    {bd.communityN<5 ? "Fewer than 5 submissions — not enough to adjust" : `${bd.communityN} submissions (${Math.round(bd.w*100)}% weight)`}
+                    {bd.communityN<5 ? "Fewer than 5 submissions, not enough to adjust" : `${bd.communityN} submissions (${Math.round(bd.w*100)}% weight)`}
                   </span>
                 </td>
                 <td className={bd.communityAdj===0?"":bd.communityAdj>0?"sign-pos":"sign-neg"}>
@@ -654,8 +654,8 @@ export default function App() {
                     <div>
                       <label className="field-label">Was your unit first occupied before Nov. 15, 2018?</label>
                       <div className="yn-pair">
-                        <button type="button" className={"yn-btn"+(preNov2018===true?" on":"")} onClick={()=>setPreNov2018(true)}>Yes — rent controlled</button>
-                        <button type="button" className={"yn-btn"+(preNov2018===false?" on":"")} onClick={()=>setPreNov2018(false)}>No — not controlled</button>
+                        <button type="button" className={"yn-btn"+(preNov2018===true?" on":"")} onClick={()=>setPreNov2018(true)}>Yes, rent controlled</button>
+                        <button type="button" className={"yn-btn"+(preNov2018===false?" on":"")} onClick={()=>setPreNov2018(false)}>No, not controlled</button>
                       </div>
                       {errors.preNov2018&&<div className="field-error">{errors.preNov2018}</div>}
                       <div className="field-note">Units first occupied before Nov. 15, 2018 are subject to Ontario's annual rent increase guideline (2.1% for 2026).</div>
@@ -687,7 +687,7 @@ export default function App() {
                   {hood&&unitType&&benchReady&&previewBench!=null&&(
                     <div className="bench-preview">
                       <div>
-                        <div className="bench-label">{CITY_NAME} benchmark &mdash; {hood}</div>
+                        <div className="bench-label">{CITY_NAME} benchmark: {hood}</div>
                         <div className="bench-val">{fmt(previewBench)}<span style={{ fontSize:12, fontWeight:400, color:"var(--t3)" }}>/mo</span></div>
                       </div>
                       <div className="bench-source">{benchLabel}</div>
@@ -703,7 +703,7 @@ export default function App() {
 
               {/* Market snapshot */}
               <div className="snapshot">
-                <div className="snapshot-header">{CITY_NAME} rental market &mdash; 2025</div>
+                <div className="snapshot-header">{CITY_NAME} rental market: 2025</div>
                 {MARKET_SNAPSHOT.map(({label,val}) => (
                   <div key={label} className="snapshot-row">
                     <span className="snapshot-key">{label}</span>
