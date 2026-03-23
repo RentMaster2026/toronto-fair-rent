@@ -1,0 +1,482 @@
+[
+  {
+    "city": "toronto",
+    "neighborhood": "Leslieville",
+    "unit_type": "2br",
+    "monthly_rent": 1800,
+    "move_in_year": 2026,
+    "includes_parking": false,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Parkdale",
+    "unit_type": "1br",
+    "monthly_rent": 1600,
+    "move_in_year": 2023,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Annex",
+    "unit_type": "1br",
+    "monthly_rent": 2250,
+    "move_in_year": 2025,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "1br",
+    "monthly_rent": 2150,
+    "move_in_year": 2025,
+    "includes_parking": false,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "1br",
+    "monthly_rent": 2200,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "North York",
+    "unit_type": "1br",
+    "monthly_rent": 2300,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Queen West",
+    "unit_type": "2br",
+    "monthly_rent": 2700,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Etobicoke",
+    "unit_type": "1br",
+    "monthly_rent": 1995,
+    "move_in_year": 2025,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "2br",
+    "monthly_rent": 2700,
+    "move_in_year": 2022,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Annex",
+    "unit_type": "bachelor",
+    "monthly_rent": 2000,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "East York",
+    "unit_type": "1br",
+    "monthly_rent": 2300,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Annex",
+    "unit_type": "1br",
+    "monthly_rent": 1950,
+    "move_in_year": 2023,
+    "includes_parking": false,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Etobicoke",
+    "unit_type": "1br",
+    "monthly_rent": 2200,
+    "move_in_year": 2025,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Etobicoke",
+    "unit_type": "2br",
+    "monthly_rent": 1534,
+    "move_in_year": 2022,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Midtown",
+    "unit_type": "2br",
+    "monthly_rent": 2600,
+    "move_in_year": 2023,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "1br",
+    "monthly_rent": 2100,
+    "move_in_year": 2026,
+    "includes_parking": false,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Etobicoke",
+    "unit_type": "2br",
+    "monthly_rent": 3250,
+    "move_in_year": 2025,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Distillery District",
+    "unit_type": "1br",
+    "monthly_rent": 2400,
+    "move_in_year": 2025,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Scarborough",
+    "unit_type": "2br",
+    "monthly_rent": 1800,
+    "move_in_year": 2021,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Junction",
+    "unit_type": "2br",
+    "monthly_rent": 2600,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Little Italy",
+    "unit_type": "1br",
+    "monthly_rent": 2190,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "St. Lawrence",
+    "unit_type": "1br",
+    "monthly_rent": 1745,
+    "move_in_year": 2023,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Liberty Village",
+    "unit_type": "1br",
+    "monthly_rent": 2150,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Midtown",
+    "unit_type": "1br",
+    "monthly_rent": 2000,
+    "move_in_year": 2022,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "East York",
+    "unit_type": "3br",
+    "monthly_rent": 3600,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "1br",
+    "monthly_rent": 2500,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "St. Lawrence",
+    "unit_type": "bachelor",
+    "monthly_rent": 1600,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Junction",
+    "unit_type": "1br",
+    "monthly_rent": 2100,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Annex",
+    "unit_type": "1br",
+    "monthly_rent": 2520,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "2br",
+    "monthly_rent": 2665,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Leslieville",
+    "unit_type": "1br",
+    "monthly_rent": 2245,
+    "move_in_year": 2025,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Etobicoke",
+    "unit_type": "1br",
+    "monthly_rent": 2000,
+    "move_in_year": 2025,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Annex",
+    "unit_type": "2br",
+    "monthly_rent": 3300,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Midtown",
+    "unit_type": "1br",
+    "monthly_rent": 2150,
+    "move_in_year": 2021,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "1br",
+    "monthly_rent": 2450,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Midtown",
+    "unit_type": "2br",
+    "monthly_rent": 2355,
+    "move_in_year": 2021,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Scarborough",
+    "unit_type": "2br",
+    "monthly_rent": 2950,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "1br",
+    "monthly_rent": 2400,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Etobicoke",
+    "unit_type": "2br",
+    "monthly_rent": 2800,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Annex",
+    "unit_type": "1br",
+    "monthly_rent": 1800,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Etobicoke",
+    "unit_type": "1br",
+    "monthly_rent": 2500,
+    "move_in_year": 2023,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "1br",
+    "monthly_rent": 2200,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Downtown Core",
+    "unit_type": "2br",
+    "monthly_rent": 3050,
+    "move_in_year": 2024,
+    "includes_parking": false,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Scarborough",
+    "unit_type": "2br",
+    "monthly_rent": 2500,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Junction",
+    "unit_type": "1br",
+    "monthly_rent": 2200,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "St. Lawrence",
+    "unit_type": "2br",
+    "monthly_rent": 2900,
+    "move_in_year": 2025,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "Junction",
+    "unit_type": "2br",
+    "monthly_rent": 2200,
+    "move_in_year": 2021,
+    "includes_parking": true,
+    "includes_utilities": true,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  },
+  {
+    "city": "toronto",
+    "neighborhood": "North York",
+    "unit_type": "1br",
+    "monthly_rent": 2200,
+    "move_in_year": 2024,
+    "includes_parking": true,
+    "includes_utilities": false,
+    "source": "reddit_r_TorontoRenting_Mar2026"
+  }
+]

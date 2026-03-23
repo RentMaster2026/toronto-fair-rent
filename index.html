@@ -1,22 +1,141 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1c2b36" />
-    <title>Toronto Rent Calculator — Fair Rent Canada</title>
-    <meta name="description" content="Check if your Toronto rent is fair. Free, anonymous comparison tool based on CMHC data and real renter submissions. No account required." />
-    <meta property="og:title" content="Toronto Rent Calculator — Fair Rent Canada" />
-    <meta property="og:description" content="Check if your Toronto rent is fair. Free and anonymous." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://torontofairrent.ca" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://torontofairrent.ca" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1c2b36" />
+  <title>Toronto Rent Calculator | Is My Rent Fair? | Fair Rent Canada</title>
+  <meta name="description" content="Check if your Toronto rent is fair. Compare your rent to real data from CMHC and Toronto renters by neighbourhood. Free, anonymous, no account needed." />
+  <link rel="canonical" href="https://torontofairrent.ca/" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://torontofairrent.ca/" />
+  <meta property="og:title" content="Toronto Rent Calculator | Is My Rent Fair?" />
+  <meta property="og:description" content="Free, anonymous Toronto rent comparison tool based on CMHC data and real Toronto renter submissions." />
+  <meta property="og:site_name" content="Fair Rent Canada" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Toronto Rent Calculator","url":"https://torontofairrent.ca","description":"Free tool to check if your Toronto rent is fair. Compare your rent to real data from CMHC and Toronto renters by neighbourhood.","applicationCategory":"FinanceApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"CAD"},"publisher":{"@type":"Organization","name":"Fair Rent Canada","url":"https://fairrent.ca"},"areaServed":{"@type":"City","name":"Toronto","containedInPlace":{"@type":"Country","name":"Canada"}}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the average rent for a 1-bedroom in Toronto?","acceptedAnswer":{"@type":"Answer","text":"The average rent for a 1-bedroom apartment in Toronto is approximately $2,650 per month as of 2025, based on CMHC data. Recent lease data from Toronto renters shows most 1-bedroom units signing between $2,100 and $2,500, with premium areas like Yorkville and Rosedale exceeding $3,000."}},{"@type":"Question","name":"What is the average rent for a 2-bedroom in Toronto?","acceptedAnswer":{"@type":"Answer","text":"The average rent for a 2-bedroom in Toronto is approximately $3,440 per month as of 2025. Recent leases typically range from $2,400 in areas like Scarborough and Etobicoke to $3,400 in downtown and waterfront buildings."}},{"@type":"Question","name":"Is rent controlled in Toronto?","acceptedAnswer":{"@type":"Answer","text":"Rent control in Toronto depends on when your unit was first occupied. Units first occupied before November 15, 2018 are subject to Ontario's annual guideline, which is 2.1% for 2026. Newer units are not rent controlled between tenancies, which is why many newer condos see large rent increases."}},{"@type":"Question","name":"What is the average rent in Scarborough, Toronto?","acceptedAnswer":{"@type":"Answer","text":"Scarborough is Toronto's most affordable major area. Average rents run about 18% below the Toronto average, making it one of the best value options while still being connected by the Bloor-Danforth subway line."}},{"@type":"Question","name":"What is the average rent in Liberty Village, Toronto?","acceptedAnswer":{"@type":"Answer","text":"Liberty Village rents typically run about 12% above the Toronto average. It is a dense, young-professional neighbourhood in the west end with many newer condo rentals."}},{"@type":"Question","name":"What is the average rent in the Annex, Toronto?","acceptedAnswer":{"@type":"Answer","text":"The Annex typically runs about 10% above the Toronto average. Located near the University of Toronto and Bloor Street, it has strong year-round rental demand."}},{"@type":"Question","name":"How do I know if my Toronto rent is fair?","acceptedAnswer":{"@type":"Answer","text":"Use the Toronto Rent Calculator on this page. Enter your neighbourhood, unit type, and monthly rent. We compare it to CMHC data and anonymous submissions from Toronto renters to show whether your rent is above, within, or below the local market range."}}]}
+  </script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f5f5f5;color:#111;line-height:1.5;}
+    .s-nav{background:#1c2b36;border-bottom:3px solid #1a3a7a;padding:0 16px;height:48px;display:flex;align-items:center;justify-content:space-between;}
+    .s-nav a{font-size:13px;font-weight:700;color:#fff;text-decoration:none;}
+    .s-nav span{font-size:12px;color:#aab8c2;}
+    .s-wrap{max-width:900px;margin:0 auto;padding:28px 16px 48px;}
+    .s-h1{font-size:clamp(20px,4vw,30px);font-weight:700;color:#111;margin-bottom:10px;line-height:1.2;}
+    .s-intro{font-size:14px;color:#444;line-height:1.65;max-width:640px;margin-bottom:24px;}
+    .s-section{margin-bottom:24px;}
+    .s-h2{font-size:16px;font-weight:700;color:#111;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #ccc;}
+    .s-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid #ccc;}
+    .s-table th{padding:8px 12px;background:#f0f0f0;border:1px solid #ccc;font-weight:700;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;color:#444;}
+    .s-table td{padding:8px 12px;border:1px solid #e8e8e8;color:#111;}
+    .s-table td:nth-child(2){font-family:"Courier New",monospace;font-weight:700;}
+    .s-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;}
+    .s-hood{padding:8px 12px;background:#fff;border:1px solid #ccc;font-size:12px;color:#444;}
+    .s-hood strong{display:block;font-size:13px;color:#111;margin-bottom:2px;}
+    .s-notice{background:#f0f4f9;border-left:3px solid #1a3a7a;padding:12px 14px;font-size:13px;color:#1a2a5a;margin-bottom:16px;}
+    .s-faq-q{font-size:13px;font-weight:700;color:#111;margin-bottom:4px;}
+    .s-faq-a{font-size:13px;color:#444;line-height:1.65;margin-bottom:14px;padding-left:12px;border-left:2px solid #ccc;}
+    .s-footer{margin-top:32px;padding-top:16px;border-top:1px solid #ccc;font-size:11px;color:#767676;font-family:"Courier New",monospace;}
+    @media(max-width:480px){.s-wrap{padding:16px 12px 40px;}}
+  </style>
+</head>
+<body>
+  <nav class="s-nav">
+    <a href="https://fairrent.ca">Fair Rent Canada</a>
+    <span>Toronto Rent Calculator</span>
+  </nav>
+
+  <div class="s-wrap" id="static-shell">
+    <h1 class="s-h1">Toronto Rent Calculator</h1>
+    <p class="s-intro">Check if your Toronto rent is fair. Compare your monthly rent to real data from CMHC and verified Toronto renter submissions, by neighbourhood. Free. Anonymous. No account required.</p>
+
+    <div class="s-notice">This tool is loading. If it does not appear, please enable JavaScript in your browser.</div>
+
+    <div class="s-section">
+      <h2 class="s-h2">Average rent in Toronto by unit type (2025)</h2>
+      <table class="s-table">
+        <thead><tr><th>Unit type</th><th>Average rent / mo</th><th>Typical range</th></tr></thead>
+        <tbody>
+          <tr><td>Bachelor / Studio</td><td>$2,100</td><td>$1,800 to $2,600</td></tr>
+          <tr><td>1 Bedroom</td><td>$2,650</td><td>$2,050 to $3,000</td></tr>
+          <tr><td>2 Bedroom</td><td>$3,440</td><td>$2,400 to $4,300</td></tr>
+          <tr><td>3 Bedroom</td><td>$4,400</td><td>$3,600 to $5,500</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:#767676;margin-top:6px;">Source: CMHC Rental Market Survey (October 2024), Rentals.ca (February 2025), and verified Toronto renter submissions. Updated March 2026.</p>
+    </div>
+
+    <div class="s-section">
+      <h2 class="s-h2">Average rent by neighbourhood in Toronto</h2>
+      <div class="s-grid">
+        <div class="s-hood"><strong>Rosedale</strong>About 35% above Toronto average</div>
+        <div class="s-hood"><strong>Yorkville</strong>About 30% above Toronto average</div>
+        <div class="s-hood"><strong>Forest Hill</strong>About 32% above Toronto average</div>
+        <div class="s-hood"><strong>Distillery District</strong>About 20% above Toronto average</div>
+        <div class="s-hood"><strong>Downtown Core</strong>About 18% above Toronto average</div>
+        <div class="s-hood"><strong>Queen West</strong>About 15% above Toronto average</div>
+        <div class="s-hood"><strong>Liberty Village</strong>About 12% above Toronto average</div>
+        <div class="s-hood"><strong>Midtown</strong>About 7% above Toronto average</div>
+        <div class="s-hood"><strong>Annex</strong>About 10% above Toronto average</div>
+        <div class="s-hood"><strong>Leslieville</strong>About 4% above Toronto average</div>
+        <div class="s-hood"><strong>Parkdale</strong>About 7% below Toronto average</div>
+        <div class="s-hood"><strong>East York</strong>About 8% below Toronto average</div>
+        <div class="s-hood"><strong>Etobicoke</strong>About 13% below Toronto average</div>
+        <div class="s-hood"><strong>North York</strong>About 10% below Toronto average</div>
+        <div class="s-hood"><strong>Scarborough</strong>About 18% below Toronto average</div>
+      </div>
+    </div>
+
+    <div class="s-section">
+      <h2 class="s-h2">Frequently asked questions about Toronto rent</h2>
+
+      <p class="s-faq-q">What is the average rent in Toronto in 2025?</p>
+      <p class="s-faq-a">The average rent for a 1-bedroom apartment in Toronto is about $2,650 per month in 2025 based on CMHC data. Recent lease data from verified Toronto renter submissions shows most 1-bedrooms signing between $2,100 and $2,500, with premium areas exceeding $3,000.</p>
+
+      <p class="s-faq-q">What is the average rent in Scarborough, Toronto?</p>
+      <p class="s-faq-a">Scarborough is Toronto's most affordable major area. Average rents run about 18% below the Toronto average, while still connected by the Bloor-Danforth subway line.</p>
+
+      <p class="s-faq-q">What is the average rent in Etobicoke, Toronto?</p>
+      <p class="s-faq-a">Etobicoke rents typically run about 13% below the Toronto average, offering more space and lower prices than the downtown core while remaining within the city.</p>
+
+      <p class="s-faq-q">What is the average rent in North York, Toronto?</p>
+      <p class="s-faq-a">North York rents are about 10% below the Toronto average. The area offers good transit access via the Yonge-University subway line and a mix of older and newer rental buildings.</p>
+
+      <p class="s-faq-q">What is the average rent in the Annex, Toronto?</p>
+      <p class="s-faq-a">The Annex typically runs about 10% above the Toronto average. Located near the University of Toronto and Bloor Street, it has strong year-round rental demand from students and young professionals.</p>
+
+      <p class="s-faq-q">Is rent controlled in Toronto?</p>
+      <p class="s-faq-a">Units first occupied before November 15, 2018 are subject to Ontario rent control. The 2026 guideline is 2.1%. Newer units are not rent controlled between tenancies, which is why many newer condos see large rent increases when tenants change.</p>
+
+      <p class="s-faq-q">How do I check if my Toronto rent is fair?</p>
+      <p class="s-faq-a">Use the Toronto Rent Calculator on this page. Enter your neighbourhood, unit type, and monthly rent. We compare it to CMHC data and verified Toronto renter submissions to show whether your rent is above, within, or below the local market range.</p>
+    </div>
+
+    <p class="s-footer">Fair Rent Canada. Toronto Rent Calculator. Data: CMHC 2025, Rentals.ca Feb 2025, and community submissions. Not legal advice. <a href="https://fairrent.ca" style="color:#767676;">fairrent.ca</a></p>
+  </div>
+
+  <div id="root"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var observer = new MutationObserver(function() {
+        var root = document.getElementById('root');
+        if (root && root.children.length > 0) {
+          var shell = document.getElementById('static-shell');
+          if (shell) shell.style.display = 'none';
+          observer.disconnect();
+        }
+      });
+      var root = document.getElementById('root');
+      if (root) observer.observe(root, { childList: true });
+    });
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
 </html>
