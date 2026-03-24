@@ -23,18 +23,16 @@ const INFLATION       = 0.040;
 
 const BASES = { bachelor:1800, "1br":2400, "2br":3100, "3br":3900, "3plus":4800 };
 const HOODS = {
-  "Alta Vista":0.95,"Barrhaven":0.92,"Bayshore / Britannia":0.96,
-  "Beacon Hill":0.93,"Blackburn Hamlet":0.91,"Byward Market":1.18,
-  "Carlington":0.88,"Centretown":1.08,"Chinatown / Lebreton":1.02,
-  "Downtown Core":1.15,"Elmvale Acres":0.90,"Findlay Creek":0.89,
-  "Gatineau (QC side)":0.82,"Glebe":1.20,"Greenboro":0.88,
-  "Hintonburg":1.10,"Kanata":0.97,"Little Italy":1.07,
-  "Lowertown":1.00,"Manor Park":1.06,"Manotick":0.94,
-  "Nepean":0.93,"New Edinburgh":1.16,"Old Ottawa South":1.05,
-  "Orleans":0.90,"Overbrook":0.90,"Queensway Terrace":0.94,
-  "Rideau-Vanier":0.87,"Riverside South":0.91,"Rosedale":1.28,
-  "Sandy Hill":1.04,"Stittsville":0.89,"Scarborough":0.85,
-  "Wellington Village":1.12,"Westboro":1.18,
+  "Annex":1.10,"Bloorcourt":1.00,"Chinatown":0.95,
+  "Davisville":1.08,"Distillery District":1.20,"Downtown Core":1.18,
+  "East End":0.94,"East York":0.92,"Etobicoke":0.87,
+  "Forest Hill":1.32,"Greektown":1.02,"Junction":0.97,
+  "Kensington Market":0.96,"Lawrence Park":1.25,"Leaside":1.14,
+  "Leslieville":1.04,"Liberty Village":1.12,"Little Italy":1.05,
+  "Midtown":1.07,"North York":0.90,"Parkdale":0.93,
+  "Queen West":1.15,"Riverside":1.01,"Rosedale":1.35,
+  "Scarborough":0.82,"St. Lawrence":1.09,"Swansea":1.03,
+  "Weston":0.86,"Willowdale":0.89,"Yorkville":1.30,
 };
 const ADDONS = { parking:250, utilities:120 };
 const GUIDELINES = {
@@ -54,11 +52,14 @@ const NEIGHBORHOODS = Object.keys(HOODS).sort((a,b) => a.localeCompare(b));
 const MARKET_SNAPSHOT = [
   { label:"1-bedroom median",        val:"$2,650" },
   { label:"2-bedroom median",        val:"$3,440" },
-  { label:"Vacancy rate (2025)",     val:"1.7%"   },
+  { label:"Vacancy rate (2025)",     val:"1.4%"   },
   { label:"Rent control guideline",  val:"2.1% (2026)" },
   { label:"Highest area",            val:"Rosedale" },
   { label:"Most affordable area",    val:"Scarborough" },
 ];
+
+// Median $/sq ft by unit type (Ottawa, estimated from CMHC + Rentals.ca 2025)
+const MEDIAN_PSF = { bachelor:4.20, "1br":3.60, "2br":3.20, "3br":2.90, "3plus":2.60 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -91,7 +92,7 @@ function getRange(bench, confLabel, unit = "1br") {
 }
 
 function getConf(n) {
-  if (n>=20) return { label:"High",   dot:"#1a3a7a", textColor:"#1a3a7a", bg:"#f0f4f9", border:"#a8d5b5", desc:`${n} local submissions blended with CMHC data.` };
+  if (n>=20) return { label:"High",   dot:"#1a5c34", textColor:"#1a5c34", bg:"#f0f7f2", border:"#a8d5b5", desc:`${n} local submissions blended with CMHC data.` };
   if (n>=8)  return { label:"Medium", dot:"#7a4f00", textColor:"#7a4f00", bg:"#fdf8f0", border:"#e8c97a", desc:`${n} local submissions blended with CMHC data.` };
   return           { label:"Low",    dot:"#8b1a1a", textColor:"#8b1a1a", bg:"#fdf0f0", border:"#e8a8a8", desc:"Based primarily on CMHC public data. Fewer than 8 local submissions." };
 }
@@ -102,6 +103,81 @@ function median(arr) {
   return s.length%2 ? s[m] : (s[m-1]+s[m])/2;
 }
 function communityWeight(n) { return n<5?0:n<10?0.2:n<20?0.4:n<50?0.6:0.8; }
+
+// ─── Fair Rent Canada Score ──────────────────────────────────────────────────
+
+function calcMarketScore(rentNum, rangeLow, rangeHigh) {
+  const span = rangeHigh - rangeLow;
+  if (span <= 0) return 5.0;
+  const pct = (rentNum - rangeLow) / span;
+  if (pct < -0.5) return 10.0;
+  if (pct <= 0.0) return 8.0 + ((-pct) / 0.5) * 2.0;
+  if (pct <= 0.5) return 6.5 + ((0.5 - pct) / 0.5) * 1.5;
+  if (pct <= 1.0) return 5.0 + ((1.0 - pct) / 0.5) * 1.5;
+  if (pct <= 1.5) return 2.5 + ((1.5 - pct) / 0.5) * 2.5;
+  return 1.0;
+}
+
+function calcPsfScore(userPsf, medianPsf) {
+  if (!medianPsf || medianPsf <= 0) return null;
+  const ratio = userPsf / medianPsf;
+  if (ratio < 0.75) return 10.0;
+  if (ratio <= 0.90) return 8.0 + ((0.90 - ratio) / 0.15) * 2.0;
+  if (ratio <= 1.05) return 6.0 + ((1.05 - ratio) / 0.15) * 2.0;
+  if (ratio <= 1.20) return 4.0 + ((1.20 - ratio) / 0.15) * 2.0;
+  if (ratio <= 1.40) return 2.0 + ((1.40 - ratio) / 0.20) * 2.0;
+  return 1.0;
+}
+
+function calcRentControlBonus(isRentControlled, guidelineCap, rentNum, sameYear) {
+  if (sameYear) return 5.0;
+  if (!RENT_CONTROLLED) return 5.0;
+  if (!isRentControlled) return 2.0;
+  if (!guidelineCap) return 5.0;
+  const overPct = (rentNum - guidelineCap) / guidelineCap;
+  if (overPct <= 0) return 10.0;
+  if (overPct <= 0.10) return 6.0;
+  return 3.0;
+}
+
+function calcFairRentScore(rentNum, range, sqftNum, unitType, isRentControlled, guidelineCap, sameYear) {
+  const marketScore = calcMarketScore(rentNum, range.low, range.high);
+  const rcBonus = calcRentControlBonus(isRentControlled, guidelineCap, rentNum, sameYear);
+
+  let psfScore = null;
+  let userPsf = null;
+  let medPsf = null;
+
+  if (sqftNum && sqftNum >= 100) {
+    // Subtract parking/utility addons before computing $/sq ft
+    userPsf = rentNum / sqftNum;
+    medPsf = MEDIAN_PSF[unitType] ?? MEDIAN_PSF["1br"];
+    psfScore = calcPsfScore(userPsf, medPsf);
+  }
+
+  let finalScore;
+  if (psfScore !== null) {
+    finalScore = (marketScore * 0.60) + (psfScore * 0.25) + (rcBonus * 0.15);
+  } else {
+    finalScore = (marketScore * 0.75) + (rcBonus * 0.25);
+  }
+
+  finalScore = Math.max(1.0, Math.min(10.0, finalScore));
+  finalScore = Math.round(finalScore * 10) / 10;
+
+  return { finalScore, marketScore, psfScore, rcBonus, userPsf, medPsf };
+}
+
+function getScoreLabel(score) {
+  if (score >= 9.0) return { label:"Excellent", color:"#1a5c34", bg:"#f0f7f2", border:"#a8d5b5" };
+  if (score >= 7.5) return { label:"Good",      color:"#1a5c34", bg:"#f0f7f2", border:"#a8d5b5" };
+  if (score >= 6.0) return { label:"Fair",       color:"#7a4f00", bg:"#fdf8f0", border:"#e8c97a" };
+  if (score >= 4.5) return { label:"Above Market", color:"#b45309", bg:"#fffbeb", border:"#fde68a" };
+  if (score >= 3.0) return { label:"High",       color:"#8b1a1a", bg:"#fdf0f0", border:"#e8a8a8" };
+  return             { label:"Very High", color:"#8b1a1a", bg:"#fdf0f0", border:"#e8a8a8" };
+}
+
+// ─── Misc ────────────────────────────────────────────────────────────────────
 
 function useCountUp(target, dur=800) {
   const [val,set] = useState(0), raf = useRef(null), prev = useRef(0);
@@ -136,7 +212,6 @@ const CSS = `
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
   a{color:inherit;}
 
-  /* ── Nav ──────────────────────────────────────────────────────────── */
   .gov-nav{background:var(--nav-bg);border-bottom:3px solid var(--accent);}
   .gov-nav-inner{max-width:1100px;margin:0 auto;padding:0 16px;height:48px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
   .gov-wordmark{font-size:13px;font-weight:700;color:#fff;text-decoration:none;white-space:nowrap;flex-shrink:0;}
@@ -148,25 +223,21 @@ const CSS = `
   .gov-subbar a{font-size:12px;color:#aab8c2;text-decoration:none;white-space:nowrap;flex-shrink:0;}
   .gov-subbar a:hover{color:#fff;text-decoration:underline;}
 
-  /* ── Page shell ───────────────────────────────────────────────────── */
   .page-wrap{max-width:1100px;margin:0 auto;padding:24px 20px 60px;}
   .page-heading{margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);}
   .page-heading h1{font-size:clamp(18px,2.5vw,24px);font-weight:700;color:var(--t1);margin-bottom:6px;line-height:1.2;}
   .page-heading p{font-size:13px;color:var(--t2);line-height:1.6;max-width:560px;}
 
-  /* ── Neighbourhood pills ──────────────────────────────────────────── */
   .hood-section{margin-bottom:20px;}
   .hood-label{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;}
   .hood-pills{display:flex;flex-wrap:wrap;gap:6px;}
   .hood-pill{padding:4px 10px;border:1px solid var(--border-dark);background:var(--white);font-size:12px;color:var(--t2);cursor:pointer;}
   .hood-pill:hover{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);}
 
-  /* ── Two-column layout ────────────────────────────────────────────── */
   .page-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:20px;align-items:start;}
   .left-col{display:flex;flex-direction:column;gap:16px;}
   .right-col{position:sticky;top:90px;}
 
-  /* ── Form panel ───────────────────────────────────────────────────── */
   .form-panel{background:var(--white);border:1px solid var(--border);border-top:3px solid var(--accent);}
   .form-panel-header{padding:12px 16px 10px;border-bottom:1px solid var(--border);background:#fafafa;}
   .form-panel-title{font-size:14px;font-weight:700;color:var(--t1);}
@@ -199,7 +270,6 @@ const CSS = `
   .btn-submit:disabled{background:#888;cursor:not-allowed;}
   .btn-anon{text-align:center;font-size:11px;color:var(--t3);margin-top:6px;}
 
-  /* ── Market snapshot ──────────────────────────────────────────────── */
   .snapshot{background:var(--white);border:1px solid var(--border);}
   .snapshot-header{padding:9px 14px;background:#fafafa;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:0.05em;}
   .snapshot-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 14px;border-bottom:1px solid #ebebeb;gap:12px;}
@@ -207,17 +277,18 @@ const CSS = `
   .snapshot-key{font-size:13px;color:var(--t2);flex:1;min-width:0;}
   .snapshot-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--t1);flex-shrink:0;}
 
-  /* ── Result panel ─────────────────────────────────────────────────── */
   .result-panel{background:var(--white);border:1px solid var(--border);}
   .result-placeholder{padding:28px 16px;text-align:center;}
   .result-placeholder-icon{width:44px;height:44px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
   .result-placeholder p{font-size:13px;color:var(--t3);line-height:1.6;max-width:240px;margin:0 auto 16px;}
-  .result-placeholder-list{text-align:left;border:1px solid var(--border);padding:12px 14px;}
   .result-header{padding:12px 14px;border-bottom:1px solid var(--border);background:#fafafa;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}
   .result-header-meta{font-size:11px;color:var(--t3);margin-top:2px;}
   .result-verdict-badge{font-size:11px;font-weight:700;padding:3px 8px;letter-spacing:0.04em;white-space:nowrap;}
   .result-body{padding:14px;display:flex;flex-direction:column;gap:14px;}
   .range-bar-track{height:8px;background:#e0e0e0;position:relative;}
+  .range-bar-fill{position:absolute;top:0;height:100%;}
+  .range-bar-tick{position:absolute;top:50%;transform:translate(-50%,-50%);width:2px;height:14px;border-radius:1px;}
+  .range-bar-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;border:2px solid;}
   .range-bar-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-top:5px;font-family:var(--mono);}
   .range-bar-your{text-align:center;font-size:11px;font-weight:700;margin-top:3px;font-family:var(--mono);}
   .conf-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;font-size:11px;font-weight:600;border:1px solid;}
@@ -227,11 +298,11 @@ const CSS = `
   .data-table tr:last-child{border-bottom:none;}
   .data-table td{padding:7px 0;vertical-align:top;}
   .data-table td:last-child{text-align:right;font-family:var(--mono);font-weight:700;white-space:nowrap;}
-  .data-table td.sign-pos{color:#1a3a7a;}
+  .data-table td.sign-pos{color:#1a5c34;}
   .data-table tfoot td{font-weight:700;padding-top:9px;border-top:2px solid var(--t1);}
   .notice{padding:11px 13px;border-left:3px solid;font-size:13px;line-height:1.6;}
   .notice a{color:inherit;font-weight:600;}
-  .notice-green{background:#f0f4f9;border-color:var(--accent);color:#1a4a28;}
+  .notice-green{background:#f0f7f2;border-color:var(--accent);color:#1a4a28;}
   .notice-amber{background:#fdf8f0;border-color:#b37a00;color:#5a3d00;}
   .action-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
   .btn-secondary{padding:9px 12px;background:var(--white);border:1px solid var(--border-dark);color:var(--t2);font-size:13px;font-weight:600;cursor:pointer;text-align:center;}
@@ -241,17 +312,34 @@ const CSS = `
   .sources{font-size:11px;color:var(--t3);line-height:1.6;padding-top:14px;border-top:1px solid var(--border);margin-top:20px;}
   .sources a{color:var(--t3);text-decoration:underline;}
 
-  /* ── Responsive ───────────────────────────────────────────────────── */
+  /* Score display */
+  .score-hero{text-align:center;padding:20px 14px;border-bottom:1px solid var(--border);}
+  .score-number{font-family:var(--mono);font-size:48px;font-weight:700;line-height:1;}
+  .score-of-ten{font-family:var(--mono);font-size:18px;font-weight:400;color:var(--t3);}
+  .score-label-badge{display:inline-block;padding:3px 10px;font-size:12px;font-weight:700;margin-top:8px;letter-spacing:0.04em;}
+  .score-summary{font-size:13px;color:var(--t2);margin-top:8px;line-height:1.5;}
+  .score-breakdown{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;}
+  .score-breakdown-item{text-align:center;padding:8px 6px;background:#f9f9f9;border:1px solid var(--border);}
+  .score-breakdown-val{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--t1);}
+  .score-breakdown-label{font-size:10px;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:0.04em;}
+
+  .psf-section{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#f9f9f9;border:1px solid var(--border);flex-wrap:wrap;gap:8px;}
+  .psf-val{font-family:var(--mono);font-size:15px;font-weight:700;}
+  .psf-label{font-size:11px;color:var(--t3);}
+  .psf-compare{font-size:11px;color:var(--t2);}
+
   @media(max-width:768px){
     .page-grid{grid-template-columns:1fr;}
     .right-col{position:static;}
     .page-wrap{padding:16px 14px 48px;}
+    .score-breakdown{grid-template-columns:1fr;}
   }
   @media(max-width:480px){
     .f-row{grid-template-columns:1fr;}
     .toggle-pair{grid-template-columns:1fr;}
     .share-row{grid-template-columns:1fr 1fr;}
     .gov-count{display:none;}
+    .score-number{font-size:40px;}
   }
 `;
 
@@ -260,10 +348,12 @@ const CSS = `
 function ResultPanel({ result, hood, unitType, onReset }) {
   const [shareOpen, setShareOpen] = useState(false);
   const [copied,    setCopied]    = useState(false);
+  const [showBreakdown, setShowBreakdown] = useState(false);
   const copyRef = useRef(null);
 
   const unitLabel = UNITS.find(u => u.key === unitType)?.label ?? unitType;
-  const { breakdown:bd, conf, posCopy, pos, range, rent, communityN } = result;
+  const { breakdown:bd, conf, posCopy, pos, range, rent, communityN, score } = result;
+  const sl = getScoreLabel(score.finalScore);
 
   const barMin  = Math.round(range.low  * 0.85 / 50) * 50;
   const barMax  = Math.round(range.high * 1.15 / 50) * 50;
@@ -275,7 +365,7 @@ function ResultPanel({ result, hood, unitType, onReset }) {
   const badgeStyle = {
     above: { background:"#fdf0f0", color:"#8b1a1a", border:"1px solid #e8a8a8" },
     below: { background:"#f0f4fd", color:"#1a3a8b", border:"1px solid #a8b8e8" },
-    within:{ background:"#f0f4f9", color:"#1a3a7a", border:"1px solid #a8d5b5" },
+    within:{ background:"#f0f7f2", color:"#1a5c34", border:"1px solid #a8d5b5" },
   };
 
   function copyLink() {
@@ -285,33 +375,90 @@ function ResultPanel({ result, hood, unitType, onReset }) {
   }
 
   const shareText = () => {
-    const lbl = pos==="below"?"below":pos==="above"?"above":"within";
-    return `My ${unitLabel.toLowerCase()} in ${hood} is ${lbl} the estimated fair rent range. Range: ${fmt(range.low)}–${fmt(range.high)}/mo. Check yours at ${SHARE_URL}`;
+    return `My ${unitLabel.toLowerCase()} in ${hood} scored ${score.finalScore}/10 on Fair Rent Canada. Check yours at ${SHARE_URL}`;
   };
 
   return (
     <div className="result-panel">
-      {/* Header */}
-      <div className="result-header">
+      {/* Score Hero */}
+      <div className="score-hero" style={{ background:sl.bg, borderBottom:`1px solid ${sl.border}` }}>
+        <div style={{ fontFamily:"var(--mono)", fontSize:10, color:"var(--t3)", textTransform:"uppercase", letterSpacing:".08em", marginBottom:8 }}>Fair Rent Canada Score</div>
         <div>
-          <div style={{ fontSize:14, fontWeight:700, color:"var(--t1)", lineHeight:1.3 }}>{posCopy.headline}</div>
-          <div className="result-header-meta">{CITY_NAME} &middot; {hood} &middot; {unitLabel}</div>
+          <span className="score-number" style={{ color:sl.color }}>{score.finalScore}</span>
+          <span className="score-of-ten"> / 10</span>
         </div>
-        <span className="result-verdict-badge" style={badgeStyle[pos]}>
-          {pos==="above"?"ABOVE RANGE":pos==="below"?"BELOW RANGE":"WITHIN RANGE"}
-        </span>
+        <div className="score-label-badge" style={{ background:sl.color, color:"#fff" }}>
+          {sl.label}
+        </div>
+        <div className="score-summary">
+          {score.finalScore >= 7.5 ? `Your rent is a good deal for ${hood}.`
+           : score.finalScore >= 6.0 ? `Your rent is in line with comparable units in ${hood}.`
+           : score.finalScore >= 4.5 ? `Your rent is above the typical range for ${hood}.`
+           : `Your rent is significantly above market for ${hood}.`}
+        </div>
+        <div style={{ fontFamily:"var(--mono)", fontSize:10, color:"var(--t3)", marginTop:6 }}>
+          {CITY_NAME} &middot; {hood} &middot; {unitLabel}
+        </div>
+
+        {/* Score component breakdown */}
+        <div className="score-breakdown">
+          <div className="score-breakdown-item">
+            <div className="score-breakdown-val">{score.marketScore.toFixed(1)}</div>
+            <div className="score-breakdown-label">Market Position</div>
+          </div>
+          {score.psfScore !== null ? (
+            <div className="score-breakdown-item">
+              <div className="score-breakdown-val">{score.psfScore.toFixed(1)}</div>
+              <div className="score-breakdown-label">$/sq ft</div>
+            </div>
+          ) : (
+            <div className="score-breakdown-item">
+              <div className="score-breakdown-val" style={{ color:"var(--t3)" }}>N/A</div>
+              <div className="score-breakdown-label">$/sq ft</div>
+            </div>
+          )}
+          <div className="score-breakdown-item">
+            <div className="score-breakdown-val">{score.rcBonus.toFixed(1)}</div>
+            <div className="score-breakdown-label">Rent Control</div>
+          </div>
+        </div>
+
+        {conf.label === "Low" && (
+          <div style={{ fontSize:11, color:"var(--t3)", marginTop:8, fontStyle:"italic" }}>
+            Score estimated with limited local data.
+          </div>
+        )}
       </div>
 
       <div className="result-body">
+        {/* Price per sq ft */}
+        {score.userPsf && (
+          <div className="psf-section">
+            <div>
+              <div className="psf-label">Your price per sq ft</div>
+              <div className="psf-val">${score.userPsf.toFixed(2)}/mo</div>
+            </div>
+            <div style={{ textAlign:"right" }}>
+              <div className="psf-label">{hood} median</div>
+              <div className="psf-val">${score.medPsf.toFixed(2)}/mo</div>
+            </div>
+            <div style={{ width:"100%", fontSize:11, color:"var(--t2)" }}>
+              {score.userPsf <= score.medPsf
+                ? `You are paying ${Math.round((1 - score.userPsf/score.medPsf)*100)}% less per sq ft than the local median.`
+                : `You are paying ${Math.round((score.userPsf/score.medPsf - 1)*100)}% more per sq ft than the local median.`}
+            </div>
+          </div>
+        )}
+
         {/* Range bar */}
         <div>
           <div className="section-label">Estimated fair rent range</div>
           <div style={{ fontSize:20, fontWeight:700, fontFamily:"var(--mono)", color:"var(--t1)", marginBottom:4 }}>
             {fmt(range.low)} &ndash; {fmt(range.high)}<span style={{ fontSize:13, fontWeight:400, color:"var(--t3)" }}> /mo</span>
           </div>
-          <div className="range-bar-wrap">
+          <div style={{ position:"relative" }}>
             <div className="range-bar-track">
-              <div className="range-bar-fill" style={{ left:lowPct+"%", width:(highPct-lowPct)+"%", background:posCopy.color }}/>
+              <div className="range-bar-fill" style={{ left:lowPct+"%", width:Math.max(5, highPct-lowPct)+"%", background:posCopy.color }}/>
               <div className="range-bar-tick" style={{ left:lowPct+"%", background:posCopy.color, opacity:.6 }}/>
               <div className="range-bar-tick" style={{ left:highPct+"%", background:posCopy.color, opacity:.6 }}/>
               <div className="range-bar-dot"  style={{ left:rentPct+"%", borderColor:posCopy.color, background:pos==="within"?posCopy.color:"var(--white)" }}/>
@@ -332,57 +479,61 @@ function ResultPanel({ result, hood, unitType, onReset }) {
           </div>
         </div>
 
-        {/* Sub-text */}
+        {/* Verdict sub-text */}
         <p style={{ fontSize:13, color:"var(--t2)", lineHeight:1.65, borderLeft:"3px solid var(--border)", paddingLeft:10 }}>{posCopy.sub}</p>
 
-        {/* Breakdown table */}
+        {/* Expandable breakdown */}
         <div>
-          <div className="section-label">How this estimate was built</div>
-          <table className="data-table">
-            <tbody>
-              <tr>
-                <td style={{ color:"var(--t2)" }}>City baseline ({unitLabel.toLowerCase()})</td>
-                <td>{fmt(bd.base)}</td>
-              </tr>
-              <tr>
-                <td style={{ color:"var(--t2)" }}>
-                  Neighbourhood adjustment<br/>
-                  <span style={{ fontSize:11, color:"var(--t3)" }}>{hood}: {bd.hoodMult>=1 ? "above" : "below"} city average ({((bd.hoodMult-1)*100).toFixed(0)}%)</span>
-                </td>
-                <td className={bd.hoodAdj>=0?"sign-pos":"sign-neg"}>
-                  {bd.hoodAdj>=0?"+":""}{fmt(bd.hoodAdj)}
-                </td>
-              </tr>
-              {(bd.parkingAdj>0||bd.utilitiesAdj>0) && (
+          <button onClick={()=>setShowBreakdown(b=>!b)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:"var(--sans)", fontSize:13, fontWeight:600, color:"var(--accent)", padding:0 }}>
+            {showBreakdown ? "Hide calculation details" : "How this estimate was built"} {showBreakdown ? "▲" : "▼"}
+          </button>
+          {showBreakdown && (
+            <table className="data-table" style={{ marginTop:8 }}>
+              <tbody>
+                <tr>
+                  <td style={{ color:"var(--t2)" }}>City baseline ({unitLabel.toLowerCase()})</td>
+                  <td>{fmt(bd.base)}</td>
+                </tr>
                 <tr>
                   <td style={{ color:"var(--t2)" }}>
-                    Amenities included<br/>
+                    Neighbourhood adjustment<br/>
+                    <span style={{ fontSize:11, color:"var(--t3)" }}>{hood}: {bd.hoodMult>=1 ? "above" : "below"} city average ({((bd.hoodMult-1)*100).toFixed(0)}%)</span>
+                  </td>
+                  <td className={bd.hoodAdj>=0?"sign-pos":"sign-neg"}>
+                    {bd.hoodAdj>=0?"+":""}{fmt(bd.hoodAdj)}
+                  </td>
+                </tr>
+                {(bd.parkingAdj>0||bd.utilitiesAdj>0) && (
+                  <tr>
+                    <td style={{ color:"var(--t2)" }}>
+                      Amenities included<br/>
+                      <span style={{ fontSize:11, color:"var(--t3)" }}>
+                        {[bd.parkingAdj>0&&"Parking (+$250)", bd.utilitiesAdj>0&&"Utilities (+$120)"].filter(Boolean).join(", ")}
+                      </span>
+                    </td>
+                    <td>+{fmt(bd.parkingAdj+bd.utilitiesAdj)}</td>
+                  </tr>
+                )}
+                <tr>
+                  <td style={{ color:"var(--t2)" }}>
+                    Local renter data<br/>
                     <span style={{ fontSize:11, color:"var(--t3)" }}>
-                      {[bd.parkingAdj>0&&"Parking (+$250)", bd.utilitiesAdj>0&&"Utilities (+$120)"].filter(Boolean).join(", ")}
+                      {bd.communityN<5 ? "Fewer than 5 submissions, not enough to adjust" : `${bd.communityN} submissions (${Math.round(bd.w*100)}% weight)`}
                     </span>
                   </td>
-                  <td>+{fmt(bd.parkingAdj+bd.utilitiesAdj)}</td>
+                  <td className={bd.communityAdj===0?"":bd.communityAdj>0?"sign-pos":"sign-neg"}>
+                    {bd.communityAdj===0?"\u2014":(bd.communityAdj>0?"+":"")+fmt(bd.communityAdj)}
+                  </td>
                 </tr>
-              )}
-              <tr>
-                <td style={{ color:"var(--t2)" }}>
-                  Local renter data<br/>
-                  <span style={{ fontSize:11, color:"var(--t3)" }}>
-                    {bd.communityN<5 ? "Fewer than 5 submissions, not enough to adjust" : `${bd.communityN} submissions (${Math.round(bd.w*100)}% weight)`}
-                  </span>
-                </td>
-                <td className={bd.communityAdj===0?"":bd.communityAdj>0?"sign-pos":"sign-neg"}>
-                  {bd.communityAdj===0?"—":(bd.communityAdj>0?"+":"")+fmt(bd.communityAdj)}
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td style={{ color:"var(--t1)" }}>Benchmark (midpoint)</td>
-                <td>{fmt(bd.finalBench)}</td>
-              </tr>
-            </tfoot>
-          </table>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td style={{ color:"var(--t1)" }}>Benchmark (midpoint)</td>
+                  <td>{fmt(bd.finalBench)}</td>
+                </tr>
+              </tfoot>
+            </table>
+          )}
         </div>
 
         {/* Rent control */}
@@ -426,7 +577,7 @@ function ResultPanel({ result, hood, unitType, onReset }) {
               <a className="share-btn" href={"https://www.reddit.com/submit?url="+SHARE_URL+"&title="+encodeURIComponent(shareText())} target="_blank" rel="noopener noreferrer" style={{ background:"#ff4500", color:"#fff" }}>Reddit</a>
               <a className="share-btn" href={"https://twitter.com/intent/tweet?text="+encodeURIComponent(shareText())} target="_blank" rel="noopener noreferrer" style={{ background:"#000", color:"#fff" }}>X</a>
               <a className="share-btn" href={"https://www.threads.net/intent/post?text="+encodeURIComponent(shareText())} target="_blank" rel="noopener noreferrer" style={{ background:"#111", color:"#fff" }}>Threads</a>
-              <button className="share-btn" onClick={copyLink} style={{ background:copied?"#f0f4f9":"#f5f5f5", border:"1px solid #ccc", color:copied?"#1a3a7a":"var(--t2)" }}>{copied?"Copied":"Copy link"}</button>
+              <button className="share-btn" onClick={copyLink} style={{ background:copied?"#f0f7f2":"#f5f5f5", border:"1px solid #ccc", color:copied?"#1a5c34":"var(--t2)" }}>{copied?"Copied":"Copy link"}</button>
             </div>
           </div>
         )}
@@ -444,6 +595,7 @@ export default function App() {
   const [unitType,   setUnitType]   = useState("");
   const [rent,       setRent]       = useState("");
   const [moveInYear, setMoveInYear] = useState("");
+  const [sqft,       setSqft]       = useState("");
   const [parking,    setParking]    = useState(false);
   const [utilities,  setUtilities]  = useState(false);
   const [preNov2018, setPreNov2018] = useState(null);
@@ -492,6 +644,8 @@ export default function App() {
     const yr=+moveInYear;
     if(!moveInYear||yr<1980||yr>curYear)   e.moveInYear=`Enter a year between 1980 and ${curYear}`;
     if(RENT_CONTROLLED&&preNov2018===null) e.preNov2018="Please select one";
+    // sqft is optional, but validate if provided
+    if(sqft && (isNaN(+sqft) || +sqft < 100 || +sqft > 10000)) e.sqft="Enter a size between 100 and 10,000 sq ft";
     return e;
   }
 
@@ -501,6 +655,7 @@ export default function App() {
     setErrors({}); setSaveWarning(""); setSubmitting(true);
 
     const rentNum=+rent, yr=+moveInYear, sameYear=yr===curYear;
+    const sqftNum = sqft ? +sqft : null;
     const bd    = buildBreakdown(hood,unitType,parking,utilities,smartBench,communityN);
     const conf  = getConf(communityN);
     const range = getRange(bd.finalBench,conf.label,unitType);
@@ -509,13 +664,16 @@ export default function App() {
       ? { headline:"Your rent is below the estimated fair range for this area.", sub:`Your rent is ${fmt(range.low-rentNum)}/mo below the lower end of comparable units in ${hood}. This is a favourable position.`, color:"#1a3a8b" }
       : pos==="above"
       ? { headline:"Your rent is above the estimated fair range for this area.", sub:`Your rent is ${fmt(rentNum-range.high)}/mo above the upper end of comparable units in ${hood}. It may be worth reviewing what is included.`, color:"#8b1a1a" }
-      : { headline:"Your rent is within the estimated fair range for this area.", sub:`Your rent falls within the range we estimate for comparable units in ${hood}. This suggests it is broadly in line with the local market.`, color:"#1a3a7a" };
+      : { headline:"Your rent is within the estimated fair range for this area.", sub:`Your rent falls within the range we estimate for comparable units in ${hood}. This suggests it is broadly in line with the local market.`, color:"#1a5c34" };
 
     const yearsAgo    = Math.max(0,curYear-yr);
     const moveinBench = Math.round(bd.finalBench*Math.pow(1-INFLATION,yearsAgo));
     const guidelineCap= (!sameYear&&RENT_CONTROLLED&&preNov2018)?calcGuidelineCap(moveinBench,yr):null;
 
-    setResult({rent:rentNum,range,conf,pos,posCopy,breakdown:bd,moveinBench,guidelineCap,isRentControlled:preNov2018===true,sameYear,moveInYear:yr,communityN});
+    // Calculate Fair Rent Canada Score
+    const scoreData = calcFairRentScore(rentNum, range, sqftNum, unitType, preNov2018===true, guidelineCap, sameYear);
+
+    setResult({rent:rentNum,range,conf,pos,posCopy,breakdown:bd,moveinBench,guidelineCap,isRentControlled:preNov2018===true,sameYear,moveInYear:yr,communityN,score:scoreData});
 
     try {
       const last=Number(localStorage.getItem(COOLDOWN_KEY)??0);
@@ -532,7 +690,7 @@ export default function App() {
   }
 
   function handleReset() {
-    setResult(null); setHood(""); setUnitType(""); setRent(""); setMoveInYear("");
+    setResult(null); setHood(""); setUnitType(""); setRent(""); setMoveInYear(""); setSqft("");
     setParking(false); setUtilities(false); setPreNov2018(null); setErrors({}); setSaveWarning("");
     window.scrollTo(0,0);
   }
@@ -583,10 +741,10 @@ export default function App() {
           {/* Page heading */}
           <div style={{ marginBottom:20, paddingBottom:16, borderBottom:"1px solid var(--border)" }}>
             <h1 style={{ fontSize:"clamp(18px,3vw,24px)", fontWeight:700, color:"var(--t1)", marginBottom:4, lineHeight:1.2 }}>
-              {CITY_NAME} Rent Analysis Calculator
+              {CITY_NAME} Rent Calculator: Check If Your Rent Is Fair
             </h1>
             <p style={{ fontSize:13, color:"var(--t2)", lineHeight:1.5 }}>
-              Compare your rent against verified data from CMHC, Rentals.ca, and local renters in {CITY_NAME}.
+              Find out if your {CITY_NAME} rent is fair. Compare what you pay to real market data from CMHC and local renter submissions.
               Free. Anonymous. No account required.
             </p>
           </div>
@@ -606,7 +764,7 @@ export default function App() {
           {/* Two-column grid */}
           <div className="page-grid">
 
-            {/* LEFT — Form */}
+            {/* LEFT: Form */}
             <div className="left-col">
               <div className="form-panel">
                 <div className="form-panel-header">
@@ -647,6 +805,14 @@ export default function App() {
                       <input className="f-input" type="number" placeholder={String(curYear)} value={moveInYear} onChange={e=>setMoveInYear(e.target.value)} style={{ borderColor:errors.moveInYear?"#8b1a1a":undefined }}/>
                       {errors.moveInYear&&<div className="field-error">{errors.moveInYear}</div>}
                     </div>
+                  </div>
+
+                  {/* Square footage (optional) */}
+                  <div>
+                    <label className="field-label">Unit size in sq ft <span style={{ fontWeight:400, textTransform:"none" }}>(optional)</span></label>
+                    <input className="f-input" type="number" placeholder="e.g. 650" value={sqft} onChange={e=>setSqft(e.target.value)} style={{ maxWidth:200, borderColor:errors.sqft?"#8b1a1a":undefined }}/>
+                    {errors.sqft&&<div className="field-error">{errors.sqft}</div>}
+                    <div className="field-note">Adding your unit size improves your score accuracy. We compare your price per square foot to the neighbourhood median.</div>
                   </div>
 
                   {/* Rent control */}
@@ -720,7 +886,7 @@ export default function App() {
               )}
             </div>
 
-            {/* RIGHT — Result */}
+            {/* RIGHT: Result */}
             <div className="right-col">
               {result ? (
                 <ResultPanel result={result} hood={hood} unitType={unitType} onReset={handleReset}/>
@@ -733,7 +899,7 @@ export default function App() {
                     <p>Your result will appear here after you fill in your rental details and click <strong>Compare my rent</strong>.</p>
                     <div style={{ marginTop:20, textAlign:"left", border:"1px solid var(--border)", padding:"12px 14px" }}>
                       <div className="section-label" style={{ marginBottom:8 }}>What you will receive</div>
-                      {["Estimated fair rent range for your unit type and neighbourhood","Position above, within, or below the local market","Data confidence score based on local submission volume","Ontario rent control status and estimated legal maximum"].map(item=>(
+                      {["Fair Rent Canada Score (1 to 10)","Estimated fair rent range for your neighbourhood","Price per square foot comparison (if size provided)","Ontario rent control status and estimated legal maximum"].map(item=>(
                         <div key={item} style={{ display:"flex", gap:8, alignItems:"flex-start", marginBottom:6 }}>
                           <span style={{ color:"var(--accent)", fontWeight:700, flexShrink:0, marginTop:1 }}>&#10003;</span>
                           <span style={{ fontSize:13, color:"var(--t2)", lineHeight:1.4 }}>{item}</span>
