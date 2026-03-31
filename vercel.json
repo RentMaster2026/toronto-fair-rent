@@ -1,29 +1,70 @@
 {
   "rewrites": [
-    { "source": "/annex", "destination": "/neighbourhoods/annex.html" },
-    { "source": "/liberty-village", "destination": "/neighbourhoods/liberty-village.html" },
-    { "source": "/scarborough", "destination": "/neighbourhoods/scarborough.html" },
-    { "source": "/north-york", "destination": "/neighbourhoods/north-york.html" },
-    { "source": "/etobicoke", "destination": "/neighbourhoods/etobicoke.html" },
-    { "source": "/parkdale", "destination": "/neighbourhoods/parkdale.html" },
-    { "source": "/yorkville", "destination": "/neighbourhoods/yorkville.html" },
-    { "source": "/queen-west", "destination": "/neighbourhoods/queen-west.html" },
-    { "source": "/leslieville", "destination": "/neighbourhoods/leslieville.html" },
-    { "source": "/distillery", "destination": "/neighbourhoods/distillery.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/annex",
+      "destination": "/neighbourhoods/annex.html"
+    },
+    {
+      "source": "/liberty-village",
+      "destination": "/neighbourhoods/liberty-village.html"
+    },
+    {
+      "source": "/scarborough",
+      "destination": "/neighbourhoods/scarborough.html"
+    },
+    {
+      "source": "/north-york",
+      "destination": "/neighbourhoods/north-york.html"
+    },
+    {
+      "source": "/etobicoke",
+      "destination": "/neighbourhoods/etobicoke.html"
+    },
+    {
+      "source": "/parkdale",
+      "destination": "/neighbourhoods/parkdale.html"
+    },
+    {
+      "source": "/yorkville",
+      "destination": "/neighbourhoods/yorkville.html"
+    },
+    {
+      "source": "/queen-west",
+      "destination": "/neighbourhoods/queen-west.html"
+    },
+    {
+      "source": "/leslieville",
+      "destination": "/neighbourhoods/leslieville.html"
+    },
+    {
+      "source": "/distillery",
+      "destination": "/neighbourhoods/distillery.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/favicon.svg",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     },
     {
       "source": "/sitemap.xml",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     }
-  ]
+  ],
+  "trailingSlash": false,
+  "cleanUrls": false
 }
