@@ -136,7 +136,7 @@ export const TORONTO_HOODS = {
 
 export const TORONTO_CITY = {
   key: "toronto", name: "Toronto", province: "Ontario",
-  accent: "#2563eb", accentLight: "#eff6ff", accentBorder: "#bfdbfe",
+  accent: "#1a5c34", accentLight: "#f0f7f2", accentBorder: "#a8d5b5",
   calcUrl: "https://torontofairrent.ca",
   bases: { bachelor:1800, "1br":2400, "2br":3100, "3br":3900, "3plus":4800 },
   inflation: 0.040, rentControlled: true,
