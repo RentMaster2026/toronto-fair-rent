@@ -11,17 +11,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://torontofairrent.ca/liberty-village</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://torontofairrent.ca/scarborough</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://torontofairrent.ca/north-york</loc>
+    <loc>https://torontofairrent.ca/distillery</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -31,12 +21,22 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://torontofairrent.ca/parkdale</loc>
+    <loc>https://torontofairrent.ca/leslieville</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://torontofairrent.ca/yorkville</loc>
+    <loc>https://torontofairrent.ca/liberty-village</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/north-york</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/parkdale</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -46,12 +46,57 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://torontofairrent.ca/leslieville</loc>
+    <loc>https://torontofairrent.ca/scarborough</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://torontofairrent.ca/distillery</loc>
+    <loc>https://torontofairrent.ca/yorkville</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/st-lawrence</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/king-west</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/kensington-market</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/roncesvalles</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/midtown</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/cabbagetown</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/harbourfront</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/east-york</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://torontofairrent.ca/forest-hill</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

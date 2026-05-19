@@ -41,6 +41,42 @@
       "destination": "/neighbourhoods/distillery.html"
     },
     {
+      "source": "/st-lawrence",
+      "destination": "/neighbourhoods/st-lawrence.html"
+    },
+    {
+      "source": "/king-west",
+      "destination": "/neighbourhoods/king-west.html"
+    },
+    {
+      "source": "/kensington-market",
+      "destination": "/neighbourhoods/kensington-market.html"
+    },
+    {
+      "source": "/roncesvalles",
+      "destination": "/neighbourhoods/roncesvalles.html"
+    },
+    {
+      "source": "/midtown",
+      "destination": "/neighbourhoods/midtown.html"
+    },
+    {
+      "source": "/cabbagetown",
+      "destination": "/neighbourhoods/cabbagetown.html"
+    },
+    {
+      "source": "/harbourfront",
+      "destination": "/neighbourhoods/harbourfront.html"
+    },
+    {
+      "source": "/east-york",
+      "destination": "/neighbourhoods/east-york.html"
+    },
+    {
+      "source": "/forest-hill",
+      "destination": "/neighbourhoods/forest-hill.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
