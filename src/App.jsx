@@ -58,8 +58,132 @@ const MARKET_SNAPSHOT = [
   { label:"Most affordable area",    val:"Scarborough" },
 ];
 
-// Median $/sq ft by unit type (Ottawa, estimated from CMHC + Rentals.ca 2025)
+// Median $/sq ft by unit type (Toronto, estimated from CMHC + Rentals.ca 2025)
 const MEDIAN_PSF = { bachelor:4.20, "1br":3.60, "2br":3.20, "3br":2.90, "3plus":2.60 };
+
+// ─── i18n strings ─────────────────────────────────────────────────────────────
+const STRINGS = {
+  en: {
+    submissions:"submissions", rentMap:"Rent Map", allCities:"All cities",
+    methodology:"Methodology", about:"About", faq:"FAQ", langToggle:"FR",
+    pageTitle:`${CITY_NAME} Rent Calculator: Check If Your Rent Is Fair`,
+    pageDesc:`Find out if your ${CITY_NAME} rent is fair. Compare what you pay to real market data from CMHC and local renter submissions. Free. Anonymous. No account required.`,
+    browseByHood:"Browse by neighbourhood",
+    formTitle:"Enter your rental details", formSub:"All fields required unless marked optional",
+    labelHood:"Neighbourhood", labelUnit:"Unit type", labelRent:"Monthly rent (CAD)", labelYear:"Year moved in",
+    labelSqft:"Unit size in sq ft", sqftOptional:"optional",
+    sqftNote:"Adding your unit size improves your score accuracy. We compare your price per square foot to the neighbourhood median.",
+    labelParking:"Parking", parkingSub:"+$250/mo added to benchmark",
+    labelUtilities:"Utilities", utilitiesSub:"+$120/mo added to benchmark",
+    rentIncludes:"Rent includes",
+    preNov2018Q:"Was your unit first occupied before Nov. 15, 2018?",
+    yesRC:"Yes, rent controlled", noRC:"No, not controlled",
+    preNovNote:"Units first occupied before Nov. 15, 2018 are subject to Ontario's annual rent increase guideline (2.1% for 2026).",
+    selectDots:"Select...", btnCompare:"Compare my rent", btnProcessing:"Processing...",
+    anonNote:"Anonymous · No account required · No personal data stored",
+    errHood:"Select a neighbourhood", errUnit:"Select a unit type",
+    errRent:"Enter a valid monthly rent", errYear:y=>`Enter a year between 1980 and ${y}`,
+    errPreNov:"Please select one", errSqft:"Enter a size between 100 and 10,000 sq ft",
+    benchLbl:(city,hood)=>`${city} benchmark: ${hood}`,
+    snapshotTitle:`${CITY_NAME} rental market: 2025`,
+    unit_bachelor:"Bachelor / Studio", unit_1br:"1 Bedroom", unit_2br:"2 Bedroom", unit_3br:"3 Bedroom", unit_3plus:"3+ Bedroom",
+    scoreTitle:"Fair Rent Canada Score",
+    scoreSumGood:h=>`Your rent is a good deal for ${h}.`,
+    scoreSumFair:h=>`Your rent is in line with comparable units in ${h}.`,
+    scoreSumAbove:h=>`Your rent is above the typical range for ${h}.`,
+    scoreSumHigh:h=>`Your rent is significantly above market for ${h}.`,
+    scoreMarket:"Market Position", scorePsf:"$/sq ft", scoreRC:"Rent Control",
+    limitedData:"Score estimated with limited local data.",
+    yourPsf:"Your price per sq ft", hoodMedian:"median",
+    psfLess:p=>`You are paying ${p}% less per sq ft than the local median.`,
+    psfMore:p=>`You are paying ${p}% more per sq ft than the local median.`,
+    fairRange:"Estimated fair rent range", dataConf:"Data confidence",
+    confH:"High", confM:"Medium", confL:"Low",
+    confDescH:n=>`${n} local submissions blended with CMHC data.`,
+    confDescM:n=>`${n} local submissions blended with CMHC data.`,
+    confDescL:"Based primarily on CMHC public data. Fewer than 8 local submissions.",
+    howBuilt:"How this estimate was built", hideBreakdown:"Hide calculation details",
+    cityBase:u=>`City baseline (${u})`,
+    hoodAdjLbl:"Neighbourhood adjustment", hoodAbove:"above", hoodBelow:"below", cityAvg:"city average",
+    amenities:"Amenities included", parkingAmt:"Parking (+$250)", utilitiesAmt:"Utilities (+$120)",
+    localData:"Local renter data", fewSubs:"Fewer than 5 submissions, not enough to adjust",
+    subWeight:(n,w)=>`${n} submissions (${w}% weight)`,
+    benchLblMidpoint:"Benchmark (midpoint)",
+    ontRC:"Ontario rent control", rcUnit:"Rent controlled unit.",
+    startOver:"Start over", shareResult:"Share result", shareLabel:"Share", copyLink:"Copy link", copied:"Copied",
+    whatYouGet:"What you will receive",
+    resultItems:["Fair Rent Canada Score (1 to 10)","Estimated fair rent range for your neighbourhood","Price per square foot comparison (if size provided)","Ontario rent control status and estimated legal maximum"],
+    resultPlaceholder:"Your result will appear here after you fill in your rental details and click",
+    posHeadlineBelow:"Your rent is below the estimated fair range for this area.",
+    posHeadlineAbove:"Your rent is above the estimated fair range for this area.",
+    posHeadlineWithin:"Your rent is within the estimated fair range for this area.",
+    posSubBelow:(d,h)=>`Your rent is ${d}/mo below the lower end of comparable units in ${h}. This is a favourable position.`,
+    posSubAbove:(d,h)=>`Your rent is ${d}/mo above the upper end of comparable units in ${h}. It may be worth reviewing what is included.`,
+    posSubWithin:h=>`Your rent falls within the range we estimate for comparable units in ${h}. This suggests it is broadly in line with the local market.`,
+    posColorBelow:"#1a3a8b", posColorAbove:"#8b1a1a", posColorWithin:"#1a5c34",
+    slExcellent:"Excellent", slGood:"Good", slFair:"Fair", slAboveMarket:"Above Market", slHigh:"High", slVeryHigh:"Very High",
+  },
+  fr: {
+    submissions:"soumissions", rentMap:"Carte des loyers", allCities:"Toutes les villes",
+    methodology:"Méthodologie", about:"À propos", faq:"FAQ", langToggle:"EN",
+    pageTitle:"Calculateur de loyer à Toronto : Votre loyer est-il juste ?",
+    pageDesc:"Découvrez si votre loyer à Toronto est juste. Comparez ce que vous payez aux données réelles de la SCHL et aux soumissions de locataires locaux. Gratuit. Anonyme. Sans inscription.",
+    browseByHood:"Parcourir par quartier",
+    formTitle:"Entrez vos informations de location", formSub:"Tous les champs sont obligatoires sauf indication contraire",
+    labelHood:"Quartier", labelUnit:"Type de logement", labelRent:"Loyer mensuel (CAD)", labelYear:"Année d'emménagement",
+    labelSqft:"Superficie du logement en pi²", sqftOptional:"facultatif",
+    sqftNote:"Ajouter la superficie améliore la précision de votre indice. Nous comparons votre prix au pied carré à la médiane du quartier.",
+    labelParking:"Stationnement", parkingSub:"+250 $/mois ajouté à la référence",
+    labelUtilities:"Services publics", utilitiesSub:"+120 $/mois ajouté à la référence",
+    rentIncludes:"Le loyer comprend",
+    preNov2018Q:"Votre logement a-t-il été occupé pour la première fois avant le 15 nov. 2018 ?",
+    yesRC:"Oui, loyer contrôlé", noRC:"Non, non contrôlé",
+    preNovNote:"Les logements occupés pour la première fois avant le 15 nov. 2018 sont soumis à la directive annuelle d'augmentation des loyers de l'Ontario (2,1 % pour 2026).",
+    selectDots:"Sélectionner...", btnCompare:"Comparer mon loyer", btnProcessing:"Traitement en cours...",
+    anonNote:"Anonyme · Aucun compte requis · Aucune donnée personnelle stockée",
+    errHood:"Sélectionnez un quartier", errUnit:"Sélectionnez un type de logement",
+    errRent:"Entrez un loyer mensuel valide", errYear:y=>`Entrez une année entre 1980 et ${y}`,
+    errPreNov:"Veuillez sélectionner une option", errSqft:"Entrez une superficie entre 100 et 10 000 pi²",
+    benchLbl:(city,hood)=>`Référence ${city} : ${hood}`,
+    snapshotTitle:"Marché locatif de Toronto : 2025",
+    unit_bachelor:"Studio / Garçonnière", unit_1br:"1 chambre", unit_2br:"2 chambres", unit_3br:"3 chambres", unit_3plus:"3+ chambres",
+    scoreTitle:"Indice FairRent Canada",
+    scoreSumGood:h=>`Votre loyer est avantageux pour ${h}.`,
+    scoreSumFair:h=>`Votre loyer est conforme aux logements comparables à ${h}.`,
+    scoreSumAbove:h=>`Votre loyer est supérieur à la fourchette habituelle à ${h}.`,
+    scoreSumHigh:h=>`Votre loyer est nettement supérieur au marché à ${h}.`,
+    scoreMarket:"Position sur le marché", scorePsf:"$/pi²", scoreRC:"Contrôle des loyers",
+    limitedData:"Indice estimé avec des données locales limitées.",
+    yourPsf:"Votre prix au pi²", hoodMedian:"médiane",
+    psfLess:p=>`Vous payez ${p} % de moins au pi² que la médiane locale.`,
+    psfMore:p=>`Vous payez ${p} % de plus au pi² que la médiane locale.`,
+    fairRange:"Fourchette de loyer juste estimée", dataConf:"Fiabilité des données",
+    confH:"Élevée", confM:"Moyenne", confL:"Faible",
+    confDescH:n=>`${n} soumissions locales combinées avec les données de la SCHL.`,
+    confDescM:n=>`${n} soumissions locales combinées avec les données de la SCHL.`,
+    confDescL:"Basé principalement sur les données publiques de la SCHL. Moins de 8 soumissions locales.",
+    howBuilt:"Comment cette estimation a été calculée", hideBreakdown:"Masquer les détails du calcul",
+    cityBase:u=>`Référence de la ville (${u})`,
+    hoodAdjLbl:"Ajustement selon le quartier", hoodAbove:"au-dessus de", hoodBelow:"en dessous de", cityAvg:"la moyenne de la ville",
+    amenities:"Commodités incluses", parkingAmt:"Stationnement (+250 $)", utilitiesAmt:"Services publics (+120 $)",
+    localData:"Données des locataires locaux", fewSubs:"Moins de 5 soumissions, insuffisant pour ajuster",
+    subWeight:(n,w)=>`${n} soumissions (${w} % de pondération)`,
+    benchLblMidpoint:"Référence (point médian)",
+    ontRC:"Contrôle des loyers en Ontario", rcUnit:"Logement soumis au contrôle des loyers.",
+    startOver:"Recommencer", shareResult:"Partager le résultat", shareLabel:"Partager", copyLink:"Copier le lien", copied:"Copié",
+    whatYouGet:"Ce que vous recevrez",
+    resultItems:["Indice FairRent Canada (1 à 10)","Fourchette de loyer juste estimée pour votre quartier","Comparaison du prix au pi² (si la superficie est fournie)","Statut de contrôle des loyers en Ontario et maximum légal estimé"],
+    resultPlaceholder:"Votre résultat apparaîtra ici après avoir rempli vos informations et cliqué sur",
+    posHeadlineBelow:"Votre loyer est inférieur à la fourchette juste estimée pour cette zone.",
+    posHeadlineAbove:"Votre loyer est supérieur à la fourchette juste estimée pour cette zone.",
+    posHeadlineWithin:"Votre loyer est dans la fourchette juste estimée pour cette zone.",
+    posSubBelow:(d,h)=>`Votre loyer est de ${d}/mois en dessous de la borne inférieure des logements comparables à ${h}. C'est une position favorable.`,
+    posSubAbove:(d,h)=>`Votre loyer est de ${d}/mois au-dessus de la borne supérieure des logements comparables à ${h}. Il peut être utile de vérifier ce qui est inclus.`,
+    posSubWithin:h=>`Votre loyer est dans la fourchette estimée pour les logements comparables à ${h}. Cela indique qu'il est globalement en accord avec le marché local.`,
+    posColorBelow:"#1a3a8b", posColorAbove:"#8b1a1a", posColorWithin:"#1a5c34",
+    slExcellent:"Excellent", slGood:"Bien", slFair:"Juste", slAboveMarket:"Au-dessus du marché", slHigh:"Élevé", slVeryHigh:"Très élevé",
+  },
+};
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -169,12 +293,12 @@ function calcFairRentScore(rentNum, range, sqftNum, unitType, isRentControlled, 
 }
 
 function getScoreLabel(score) {
-  if (score >= 9.0) return { label:"Excellent", color:"#1a5c34", bg:"#f0f7f2", border:"#a8d5b5" };
-  if (score >= 7.5) return { label:"Good",      color:"#1a5c34", bg:"#f0f7f2", border:"#a8d5b5" };
-  if (score >= 6.0) return { label:"Fair",       color:"#7a4f00", bg:"#fdf8f0", border:"#e8c97a" };
-  if (score >= 4.5) return { label:"Above Market", color:"#b45309", bg:"#fffbeb", border:"#fde68a" };
-  if (score >= 3.0) return { label:"High",       color:"#8b1a1a", bg:"#fdf0f0", border:"#e8a8a8" };
-  return             { label:"Very High", color:"#8b1a1a", bg:"#fdf0f0", border:"#e8a8a8" };
+  if (score >= 9.0) return { key:"slExcellent",  color:"#1a5c34", bg:"#f0f7f2", border:"#a8d5b5" };
+  if (score >= 7.5) return { key:"slGood",        color:"#1a5c34", bg:"#f0f7f2", border:"#a8d5b5" };
+  if (score >= 6.0) return { key:"slFair",         color:"#7a4f00", bg:"#fdf8f0", border:"#e8c97a" };
+  if (score >= 4.5) return { key:"slAboveMarket", color:"#b45309", bg:"#fffbeb", border:"#fde68a" };
+  if (score >= 3.0) return { key:"slHigh",         color:"#8b1a1a", bg:"#fdf0f0", border:"#e8a8a8" };
+  return             { key:"slVeryHigh",  color:"#8b1a1a", bg:"#fdf0f0", border:"#e8a8a8" };
 }
 
 // ─── Misc ────────────────────────────────────────────────────────────────────
@@ -345,15 +469,22 @@ const CSS = `
 
 // ─── Result Panel ─────────────────────────────────────────────────────────────
 
-function ResultPanel({ result, hood, unitType, onReset }) {
+function ResultPanel({ result, hood, unitType, onReset, t }) {
   const [shareOpen, setShareOpen] = useState(false);
   const [copied,    setCopied]    = useState(false);
   const [showBreakdown, setShowBreakdown] = useState(false);
   const copyRef = useRef(null);
 
-  const unitLabel = UNITS.find(u => u.key === unitType)?.label ?? unitType;
-  const { breakdown:bd, conf, posCopy, pos, range, rent, communityN, score } = result;
+  const unitLabel = t('unit_'+unitType) ?? unitType;
+  const { breakdown:bd, conf, pos, range, rent, communityN, score } = result;
   const sl = getScoreLabel(score.finalScore);
+  const posCopy = {
+    below:  { headline:t('posHeadlineBelow'),  sub:t('posSubBelow')(fmt(range.low-rent), hood),   color:t('posColorBelow')  },
+    above:  { headline:t('posHeadlineAbove'),  sub:t('posSubAbove')(fmt(rent-range.high), hood),  color:t('posColorAbove')  },
+    within: { headline:t('posHeadlineWithin'), sub:t('posSubWithin')(hood),                       color:t('posColorWithin') },
+  }[pos];
+  const confLabelDisp = conf.label==='High' ? t('confH') : conf.label==='Medium' ? t('confM') : t('confL');
+  const confDesc = conf.label==='High' ? t('confDescH')(communityN) : conf.label==='Medium' ? t('confDescM')(communityN) : t('confDescL');
 
   const barMin  = Math.round(range.low  * 0.85 / 50) * 50;
   const barMax  = Math.round(range.high * 1.15 / 50) * 50;
@@ -382,19 +513,19 @@ function ResultPanel({ result, hood, unitType, onReset }) {
     <div className="result-panel">
       {/* Score Hero */}
       <div className="score-hero" style={{ background:sl.bg, borderBottom:`1px solid ${sl.border}` }}>
-        <div style={{ fontFamily:"var(--mono)", fontSize:10, color:"var(--t3)", textTransform:"uppercase", letterSpacing:".08em", marginBottom:8 }}>Fair Rent Canada Score</div>
+        <div style={{ fontFamily:"var(--mono)", fontSize:10, color:"var(--t3)", textTransform:"uppercase", letterSpacing:".08em", marginBottom:8 }}>{t('scoreTitle')}</div>
         <div>
           <span className="score-number" style={{ color:sl.color }}>{score.finalScore}</span>
           <span className="score-of-ten"> / 10</span>
         </div>
         <div className="score-label-badge" style={{ background:sl.color, color:"#fff" }}>
-          {sl.label}
+          {t(sl.key)}
         </div>
         <div className="score-summary">
-          {score.finalScore >= 7.5 ? `Your rent is a good deal for ${hood}.`
-           : score.finalScore >= 6.0 ? `Your rent is in line with comparable units in ${hood}.`
-           : score.finalScore >= 4.5 ? `Your rent is above the typical range for ${hood}.`
-           : `Your rent is significantly above market for ${hood}.`}
+          {score.finalScore >= 7.5 ? t('scoreSumGood')(hood)
+           : score.finalScore >= 6.0 ? t('scoreSumFair')(hood)
+           : score.finalScore >= 4.5 ? t('scoreSumAbove')(hood)
+           : t('scoreSumHigh')(hood)}
         </div>
         <div style={{ fontFamily:"var(--mono)", fontSize:10, color:"var(--t3)", marginTop:6 }}>
           {CITY_NAME} &middot; {hood} &middot; {unitLabel}
@@ -404,28 +535,28 @@ function ResultPanel({ result, hood, unitType, onReset }) {
         <div className="score-breakdown">
           <div className="score-breakdown-item">
             <div className="score-breakdown-val">{score.marketScore.toFixed(1)}</div>
-            <div className="score-breakdown-label">Market Position</div>
+            <div className="score-breakdown-label">{t('scoreMarket')}</div>
           </div>
           {score.psfScore !== null ? (
             <div className="score-breakdown-item">
               <div className="score-breakdown-val">{score.psfScore.toFixed(1)}</div>
-              <div className="score-breakdown-label">$/sq ft</div>
+              <div className="score-breakdown-label">{t('scorePsf')}</div>
             </div>
           ) : (
             <div className="score-breakdown-item">
               <div className="score-breakdown-val" style={{ color:"var(--t3)" }}>N/A</div>
-              <div className="score-breakdown-label">$/sq ft</div>
+              <div className="score-breakdown-label">{t('scorePsf')}</div>
             </div>
           )}
           <div className="score-breakdown-item">
             <div className="score-breakdown-val">{score.rcBonus.toFixed(1)}</div>
-            <div className="score-breakdown-label">Rent Control</div>
+            <div className="score-breakdown-label">{t('scoreRC')}</div>
           </div>
         </div>
 
         {conf.label === "Low" && (
           <div style={{ fontSize:11, color:"var(--t3)", marginTop:8, fontStyle:"italic" }}>
-            Score estimated with limited local data.
+            {t('limitedData')}
           </div>
         )}
       </div>
@@ -435,24 +566,24 @@ function ResultPanel({ result, hood, unitType, onReset }) {
         {score.userPsf && (
           <div className="psf-section">
             <div>
-              <div className="psf-label">Your price per sq ft</div>
+              <div className="psf-label">{t('yourPsf')}</div>
               <div className="psf-val">${score.userPsf.toFixed(2)}/mo</div>
             </div>
             <div style={{ textAlign:"right" }}>
-              <div className="psf-label">{hood} median</div>
+              <div className="psf-label">{hood} {t('hoodMedian')}</div>
               <div className="psf-val">${score.medPsf.toFixed(2)}/mo</div>
             </div>
             <div style={{ width:"100%", fontSize:11, color:"var(--t2)" }}>
               {score.userPsf <= score.medPsf
-                ? `You are paying ${Math.round((1 - score.userPsf/score.medPsf)*100)}% less per sq ft than the local median.`
-                : `You are paying ${Math.round((score.userPsf/score.medPsf - 1)*100)}% more per sq ft than the local median.`}
+                ? t('psfLess')(Math.round((1 - score.userPsf/score.medPsf)*100))
+                : t('psfMore')(Math.round((score.userPsf/score.medPsf - 1)*100))}
             </div>
           </div>
         )}
 
         {/* Range bar */}
         <div>
-          <div className="section-label">Estimated fair rent range</div>
+          <div className="section-label">{t('fairRange')}</div>
           <div style={{ fontSize:20, fontWeight:700, fontFamily:"var(--mono)", color:"var(--t1)", marginBottom:4 }}>
             {fmt(range.low)} &ndash; {fmt(range.high)}<span style={{ fontSize:13, fontWeight:400, color:"var(--t3)" }}> /mo</span>
           </div>
@@ -470,12 +601,12 @@ function ResultPanel({ result, hood, unitType, onReset }) {
             <div className="range-bar-your" style={{ color:posCopy.color }}>Your rent: {fmt(rent)}</div>
           </div>
           <div style={{ marginTop:8, display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
-            <span style={{ fontSize:12, color:"var(--t3)" }}>Data confidence:</span>
+            <span style={{ fontSize:12, color:"var(--t3)" }}>{t('dataConf')}:</span>
             <span className="conf-badge" style={{ background:conf.bg, borderColor:conf.border, color:conf.textColor }}>
               <span style={{ width:6, height:6, borderRadius:"50%", background:conf.dot, display:"inline-block" }}/>
-              {conf.label}
+              {confLabelDisp}
             </span>
-            <span style={{ fontSize:11, color:"var(--t3)" }}>{conf.desc}</span>
+            <span style={{ fontSize:11, color:"var(--t3)" }}>{confDesc}</span>
           </div>
         </div>
 
@@ -485,19 +616,19 @@ function ResultPanel({ result, hood, unitType, onReset }) {
         {/* Expandable breakdown */}
         <div>
           <button onClick={()=>setShowBreakdown(b=>!b)} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:"var(--sans)", fontSize:13, fontWeight:600, color:"var(--accent)", padding:0 }}>
-            {showBreakdown ? "Hide calculation details" : "How this estimate was built"} {showBreakdown ? "▲" : "▼"}
+            {showBreakdown ? t('hideBreakdown') : t('howBuilt')} {showBreakdown ? "▲" : "▼"}
           </button>
           {showBreakdown && (
             <table className="data-table" style={{ marginTop:8 }}>
               <tbody>
                 <tr>
-                  <td style={{ color:"var(--t2)" }}>City baseline ({unitLabel.toLowerCase()})</td>
+                  <td style={{ color:"var(--t2)" }}>{t('cityBase')(unitLabel.toLowerCase())}</td>
                   <td>{fmt(bd.base)}</td>
                 </tr>
                 <tr>
                   <td style={{ color:"var(--t2)" }}>
-                    Neighbourhood adjustment<br/>
-                    <span style={{ fontSize:11, color:"var(--t3)" }}>{hood}: {bd.hoodMult>=1 ? "above" : "below"} city average ({((bd.hoodMult-1)*100).toFixed(0)}%)</span>
+                    {t('hoodAdjLbl')}<br/>
+                    <span style={{ fontSize:11, color:"var(--t3)" }}>{hood}: {bd.hoodMult>=1 ? t('hoodAbove') : t('hoodBelow')} {t('cityAvg')} ({((bd.hoodMult-1)*100).toFixed(0)}%)</span>
                   </td>
                   <td className={bd.hoodAdj>=0?"sign-pos":"sign-neg"}>
                     {bd.hoodAdj>=0?"+":""}{fmt(bd.hoodAdj)}
@@ -506,9 +637,9 @@ function ResultPanel({ result, hood, unitType, onReset }) {
                 {(bd.parkingAdj>0||bd.utilitiesAdj>0) && (
                   <tr>
                     <td style={{ color:"var(--t2)" }}>
-                      Amenities included<br/>
+                      {t('amenities')}<br/>
                       <span style={{ fontSize:11, color:"var(--t3)" }}>
-                        {[bd.parkingAdj>0&&"Parking (+$250)", bd.utilitiesAdj>0&&"Utilities (+$120)"].filter(Boolean).join(", ")}
+                        {[bd.parkingAdj>0&&t('parkingAmt'), bd.utilitiesAdj>0&&t('utilitiesAmt')].filter(Boolean).join(", ")}
                       </span>
                     </td>
                     <td>+{fmt(bd.parkingAdj+bd.utilitiesAdj)}</td>
@@ -516,9 +647,9 @@ function ResultPanel({ result, hood, unitType, onReset }) {
                 )}
                 <tr>
                   <td style={{ color:"var(--t2)" }}>
-                    Local renter data<br/>
+                    {t('localData')}<br/>
                     <span style={{ fontSize:11, color:"var(--t3)" }}>
-                      {bd.communityN<5 ? "Fewer than 5 submissions, not enough to adjust" : `${bd.communityN} submissions (${Math.round(bd.w*100)}% weight)`}
+                      {bd.communityN<5 ? t('fewSubs') : t('subWeight')(bd.communityN, Math.round(bd.w*100))}
                     </span>
                   </td>
                   <td className={bd.communityAdj===0?"":bd.communityAdj>0?"sign-pos":"sign-neg"}>
@@ -528,7 +659,7 @@ function ResultPanel({ result, hood, unitType, onReset }) {
               </tbody>
               <tfoot>
                 <tr>
-                  <td style={{ color:"var(--t1)" }}>Benchmark (midpoint)</td>
+                  <td style={{ color:"var(--t1)" }}>{t('benchLblMidpoint')}</td>
                   <td>{fmt(bd.finalBench)}</td>
                 </tr>
               </tfoot>
@@ -539,7 +670,7 @@ function ResultPanel({ result, hood, unitType, onReset }) {
         {/* Rent control */}
         {RENT_CONTROLLED && !result.sameYear && (
           <div>
-            <div className="section-label">Ontario rent control</div>
+            <div className="section-label">{t('ontRC')}</div>
             {result.isRentControlled ? (
               <div className="notice notice-green">
                 <strong>Rent controlled unit.</strong> Ontario caps annual increases at 2.1% for 2026. Based on your move-in rent, the estimated legal maximum today is <strong>{fmt(result.guidelineCap)}/mo</strong>.
@@ -566,18 +697,18 @@ function ResultPanel({ result, hood, unitType, onReset }) {
 
         {/* Actions */}
         <div className="action-row">
-          <button className="btn-secondary" onClick={onReset}>Start over</button>
-          <button className="btn-secondary" onClick={() => setShareOpen(s=>!s)}>Share result</button>
+          <button className="btn-secondary" onClick={onReset}>{t('startOver')}</button>
+          <button className="btn-secondary" onClick={() => setShareOpen(s=>!s)}>{t('shareResult')}</button>
         </div>
 
         {shareOpen && (
           <div>
-            <div className="section-label" style={{ marginBottom:6 }}>Share</div>
+            <div className="section-label" style={{ marginBottom:6 }}>{t('shareLabel')}</div>
             <div className="share-row">
               <a className="share-btn" href={"https://www.reddit.com/submit?url="+SHARE_URL+"&title="+encodeURIComponent(shareText())} target="_blank" rel="noopener noreferrer" style={{ background:"#ff4500", color:"#fff" }}>Reddit</a>
               <a className="share-btn" href={"https://twitter.com/intent/tweet?text="+encodeURIComponent(shareText())} target="_blank" rel="noopener noreferrer" style={{ background:"#000", color:"#fff" }}>X</a>
               <a className="share-btn" href={"https://www.threads.net/intent/post?text="+encodeURIComponent(shareText())} target="_blank" rel="noopener noreferrer" style={{ background:"#111", color:"#fff" }}>Threads</a>
-              <button className="share-btn" onClick={copyLink} style={{ background:copied?"#f0f7f2":"#f5f5f5", border:"1px solid #ccc", color:copied?"#1a5c34":"var(--t2)" }}>{copied?"Copied":"Copy link"}</button>
+              <button className="share-btn" onClick={copyLink} style={{ background:copied?"#f0f7f2":"#f5f5f5", border:"1px solid #ccc", color:copied?"#1a5c34":"var(--t2)" }}>{copied ? t('copied') : t('copyLink')}</button>
             </div>
           </div>
         )}
@@ -590,6 +721,16 @@ function ResultPanel({ result, hood, unitType, onReset }) {
 
 export default function App() {
   const curYear = new Date().getFullYear();
+
+  const [lang, setLang] = useState(() => {
+    try { return localStorage.getItem('frc_lang') || 'en'; } catch { return 'en'; }
+  });
+  const t = key => (STRINGS[lang]?.[key] ?? STRINGS.en[key] ?? key);
+  function toggleLang() {
+    const next = lang === 'en' ? 'fr' : 'en';
+    setLang(next);
+    try { localStorage.setItem('frc_lang', next); } catch {}
+  }
 
   const [hood,       setHood]       = useState("");
   const [unitType,   setUnitType]   = useState("");
@@ -638,14 +779,13 @@ export default function App() {
 
   function validate() {
     const e={};
-    if(!hood)                              e.hood="Select a neighbourhood";
-    if(!unitType)                          e.unitType="Select a unit type";
-    if(!rent||isNaN(+rent)||+rent<300)     e.rent="Enter a valid monthly rent";
+    if(!hood)                              e.hood=t('errHood');
+    if(!unitType)                          e.unitType=t('errUnit');
+    if(!rent||isNaN(+rent)||+rent<300)     e.rent=t('errRent');
     const yr=+moveInYear;
-    if(!moveInYear||yr<1980||yr>curYear)   e.moveInYear=`Enter a year between 1980 and ${curYear}`;
-    if(RENT_CONTROLLED&&preNov2018===null) e.preNov2018="Please select one";
-    // sqft is optional, but validate if provided
-    if(sqft && (isNaN(+sqft) || +sqft < 100 || +sqft > 10000)) e.sqft="Enter a size between 100 and 10,000 sq ft";
+    if(!moveInYear||yr<1980||yr>curYear)   e.moveInYear=t('errYear')(curYear);
+    if(RENT_CONTROLLED&&preNov2018===null) e.preNov2018=t('errPreNov');
+    if(sqft && (isNaN(+sqft) || +sqft < 100 || +sqft > 10000)) e.sqft=t('errSqft');
     return e;
   }
 
@@ -660,11 +800,6 @@ export default function App() {
     const conf  = getConf(communityN);
     const range = getRange(bd.finalBench,conf.label,unitType);
     const pos   = rentNum<range.low?"below":rentNum>range.high?"above":"within";
-    const posCopy = pos==="below"
-      ? { headline:"Your rent is below the estimated fair range for this area.", sub:`Your rent is ${fmt(range.low-rentNum)}/mo below the lower end of comparable units in ${hood}. This is a favourable position.`, color:"#1a3a8b" }
-      : pos==="above"
-      ? { headline:"Your rent is above the estimated fair range for this area.", sub:`Your rent is ${fmt(rentNum-range.high)}/mo above the upper end of comparable units in ${hood}. It may be worth reviewing what is included.`, color:"#8b1a1a" }
-      : { headline:"Your rent is within the estimated fair range for this area.", sub:`Your rent falls within the range we estimate for comparable units in ${hood}. This suggests it is broadly in line with the local market.`, color:"#1a5c34" };
 
     const yearsAgo    = Math.max(0,curYear-yr);
     const moveinBench = Math.round(bd.finalBench*Math.pow(1-INFLATION,yearsAgo));
@@ -673,7 +808,7 @@ export default function App() {
     // Calculate Fair Rent Canada Score
     const scoreData = calcFairRentScore(rentNum, range, sqftNum, unitType, preNov2018===true, guidelineCap, sameYear);
 
-    setResult({rent:rentNum,range,conf,pos,posCopy,breakdown:bd,moveinBench,guidelineCap,isRentControlled:preNov2018===true,sameYear,moveInYear:yr,communityN,score:scoreData});
+    setResult({rent:rentNum,range,conf,pos,breakdown:bd,moveinBench,guidelineCap,isRentControlled:preNov2018===true,sameYear,moveInYear:yr,communityN,score:scoreData});
 
     try {
       const last=Number(localStorage.getItem(COOLDOWN_KEY)??0);
@@ -719,20 +854,27 @@ export default function App() {
             <a href="https://fairrent.ca" className="gov-wordmark">
               Fair Rent Canada <span>/ {CITY_NAME}</span>
             </a>
-            {countLoaded && (
-              <div className="gov-count">{displayCount.toLocaleString("en-CA")} submissions</div>
-            )}
+            <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+              {countLoaded && (
+                <div className="gov-count">{displayCount.toLocaleString("en-CA")} {t('submissions')}</div>
+              )}
+              <button
+                onClick={toggleLang}
+                style={{ background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.25)", color:"#fff", fontFamily:"var(--sans)", fontSize:11, fontWeight:700, padding:"3px 8px", cursor:"pointer", letterSpacing:".04em", borderRadius:3, flexShrink:0 }}
+                title={lang==='en'?"Passer en français":"Switch to English"}
+              >{t('langToggle')}</button>
+            </div>
           </div>
         </div>
 
         {/* SUB-NAV */}
         <div className="gov-subbar">
           <div className="gov-subbar-inner">
-            <a href="/map" style={{background:"#1a5c34",color:"#fff",padding:"3px 10px",borderRadius:"3px",fontWeight:600}}>Rent Map</a>
-            <a href="https://fairrent.ca">All cities</a>
-            <a href="https://fairrent.ca/methodology">Methodology</a>
-            <a href="https://fairrent.ca/about">About</a>
-            <a href="https://fairrent.ca/faq">FAQ</a>
+            <a href="/map" style={{background:"#1a5c34",color:"#fff",padding:"3px 10px",borderRadius:"3px",fontWeight:600}}>{t('rentMap')}</a>
+            <a href="https://fairrent.ca">{t('allCities')}</a>
+            <a href="https://fairrent.ca/methodology">{t('methodology')}</a>
+            <a href="https://fairrent.ca/about">{t('about')}</a>
+            <a href="https://fairrent.ca/faq">{t('faq')}</a>
           </div>
         </div>
 
@@ -742,17 +884,16 @@ export default function App() {
           {/* Page heading */}
           <div style={{ marginBottom:20, paddingBottom:16, borderBottom:"1px solid var(--border)" }}>
             <h1 style={{ fontSize:"clamp(18px,3vw,24px)", fontWeight:700, color:"var(--t1)", marginBottom:4, lineHeight:1.2 }}>
-              {CITY_NAME} Rent Calculator: Check If Your Rent Is Fair
+              {t('pageTitle')}
             </h1>
             <p style={{ fontSize:13, color:"var(--t2)", lineHeight:1.5 }}>
-              Find out if your {CITY_NAME} rent is fair. Compare what you pay to real market data from CMHC and local renter submissions.
-              Free. Anonymous. No account required.
+              {t('pageDesc')}
             </p>
           </div>
 
           {/* Neighbourhood browse */}
           <div className="hood-section">
-            <div className="hood-label">Browse by neighbourhood</div>
+            <div className="hood-label">{t('browseByHood')}</div>
             <div className="hood-pills">
               {Object.keys(TORONTO_HOODS).map(slug => (
                 <button key={slug} className="hood-pill" onClick={() => setShowHood(slug)}>
@@ -769,26 +910,26 @@ export default function App() {
             <div className="left-col">
               <div className="form-panel">
                 <div className="form-panel-header">
-                  <div className="form-panel-title">Enter your rental details</div>
-                  <div className="form-panel-sub">All fields required unless marked optional</div>
+                  <div className="form-panel-title">{t('formTitle')}</div>
+                  <div className="form-panel-sub">{t('formSub')}</div>
                 </div>
                 <div className="form-body">
 
                   {/* Neighbourhood + Unit */}
                   <div className="f-row">
                     <div>
-                      <label className="field-label">Neighbourhood</label>
+                      <label className="field-label">{t('labelHood')}</label>
                       <select className="f-select" value={hood} onChange={e=>setHood(e.target.value)} style={{ borderColor:errors.hood?"#8b1a1a":undefined }}>
-                        <option value="">Select...</option>
+                        <option value="">{t('selectDots')}</option>
                         {NEIGHBORHOODS.map(n=><option key={n} value={n}>{n}</option>)}
                       </select>
                       {errors.hood&&<div className="field-error">{errors.hood}</div>}
                     </div>
                     <div>
-                      <label className="field-label">Unit type</label>
+                      <label className="field-label">{t('labelUnit')}</label>
                       <select className="f-select" value={unitType} onChange={e=>setUnitType(e.target.value)} style={{ borderColor:errors.unitType?"#8b1a1a":undefined }}>
-                        <option value="">Select...</option>
-                        {UNITS.map(u=><option key={u.key} value={u.key}>{u.label}</option>)}
+                        <option value="">{t('selectDots')}</option>
+                        {UNITS.map(u=><option key={u.key} value={u.key}>{t('unit_'+u.key)}</option>)}
                       </select>
                       {errors.unitType&&<div className="field-error">{errors.unitType}</div>}
                     </div>
@@ -797,12 +938,12 @@ export default function App() {
                   {/* Rent + Year */}
                   <div className="f-row">
                     <div>
-                      <label className="field-label">Monthly rent (CAD)</label>
+                      <label className="field-label">{t('labelRent')}</label>
                       <input className="f-input" type="number" placeholder="e.g. 2200" value={rent} onChange={e=>setRent(e.target.value)} style={{ borderColor:errors.rent?"#8b1a1a":undefined }}/>
                       {errors.rent&&<div className="field-error">{errors.rent}</div>}
                     </div>
                     <div>
-                      <label className="field-label">Year moved in</label>
+                      <label className="field-label">{t('labelYear')}</label>
                       <input className="f-input" type="number" placeholder={String(curYear)} value={moveInYear} onChange={e=>setMoveInYear(e.target.value)} style={{ borderColor:errors.moveInYear?"#8b1a1a":undefined }}/>
                       {errors.moveInYear&&<div className="field-error">{errors.moveInYear}</div>}
                     </div>
@@ -810,41 +951,41 @@ export default function App() {
 
                   {/* Square footage (optional) */}
                   <div>
-                    <label className="field-label">Unit size in sq ft <span style={{ fontWeight:400, textTransform:"none" }}>(optional)</span></label>
+                    <label className="field-label">{t('labelSqft')} <span style={{ fontWeight:400, textTransform:"none" }}>({t('sqftOptional')})</span></label>
                     <input className="f-input" type="number" placeholder="e.g. 650" value={sqft} onChange={e=>setSqft(e.target.value)} style={{ maxWidth:200, borderColor:errors.sqft?"#8b1a1a":undefined }}/>
                     {errors.sqft&&<div className="field-error">{errors.sqft}</div>}
-                    <div className="field-note">Adding your unit size improves your score accuracy. We compare your price per square foot to the neighbourhood median.</div>
+                    <div className="field-note">{t('sqftNote')}</div>
                   </div>
 
                   {/* Rent control */}
                   {RENT_CONTROLLED && (
                     <div>
-                      <label className="field-label">Was your unit first occupied before Nov. 15, 2018?</label>
+                      <label className="field-label">{t('preNov2018Q')}</label>
                       <div className="yn-pair">
-                        <button type="button" className={"yn-btn"+(preNov2018===true?" on":"")} onClick={()=>setPreNov2018(true)}>Yes, rent controlled</button>
-                        <button type="button" className={"yn-btn"+(preNov2018===false?" on":"")} onClick={()=>setPreNov2018(false)}>No, not controlled</button>
+                        <button type="button" className={"yn-btn"+(preNov2018===true?" on":"")} onClick={()=>setPreNov2018(true)}>{t('yesRC')}</button>
+                        <button type="button" className={"yn-btn"+(preNov2018===false?" on":"")} onClick={()=>setPreNov2018(false)}>{t('noRC')}</button>
                       </div>
                       {errors.preNov2018&&<div className="field-error">{errors.preNov2018}</div>}
-                      <div className="field-note">Units first occupied before Nov. 15, 2018 are subject to Ontario's annual rent increase guideline (2.1% for 2026).</div>
+                      <div className="field-note">{t('preNovNote')}</div>
                     </div>
                   )}
 
                   {/* Toggles */}
                   <div>
-                    <label className="field-label">Rent includes</label>
+                    <label className="field-label">{t('rentIncludes')}</label>
                     <div className="toggle-pair">
                       <label className={"toggle-item"+(parking?" on":"")}>
                         <input type="checkbox" checked={parking} onChange={e=>setParking(e.target.checked)}/>
                         <div>
-                          <div className="toggle-item-text">Parking</div>
-                          <div className="toggle-item-sub">+$250/mo added to benchmark</div>
+                          <div className="toggle-item-text">{t('labelParking')}</div>
+                          <div className="toggle-item-sub">{t('parkingSub')}</div>
                         </div>
                       </label>
                       <label className={"toggle-item"+(utilities?" on":"")}>
                         <input type="checkbox" checked={utilities} onChange={e=>setUtilities(e.target.checked)}/>
                         <div>
-                          <div className="toggle-item-text">Utilities</div>
-                          <div className="toggle-item-sub">+$120/mo added to benchmark</div>
+                          <div className="toggle-item-text">{t('labelUtilities')}</div>
+                          <div className="toggle-item-sub">{t('utilitiesSub')}</div>
                         </div>
                       </label>
                     </div>
@@ -854,7 +995,7 @@ export default function App() {
                   {hood&&unitType&&benchReady&&previewBench!=null&&(
                     <div className="bench-preview">
                       <div>
-                        <div className="bench-label">{CITY_NAME} benchmark: {hood}</div>
+                        <div className="bench-label">{t('benchLbl')(CITY_NAME, hood)}</div>
                         <div className="bench-val">{fmt(previewBench)}<span style={{ fontSize:12, fontWeight:400, color:"var(--t3)" }}>/mo</span></div>
                       </div>
                       <div className="bench-source">{benchLabel}</div>
@@ -862,15 +1003,15 @@ export default function App() {
                   )}
 
                   <button className="btn-submit" onClick={handleCalc} disabled={submitting}>
-                    {submitting?"Processing...":"Compare my rent"}
+                    {submitting ? t('btnProcessing') : t('btnCompare')}
                   </button>
-                  <div className="btn-anon">Anonymous &middot; No account required &middot; No personal data stored</div>
+                  <div className="btn-anon">{t('anonNote')}</div>
                 </div>
               </div>
 
               {/* Market snapshot */}
               <div className="snapshot">
-                <div className="snapshot-header">{CITY_NAME} rental market: 2025</div>
+                <div className="snapshot-header">{t('snapshotTitle')}</div>
                 {MARKET_SNAPSHOT.map(({label,val}) => (
                   <div key={label} className="snapshot-row">
                     <span className="snapshot-key">{label}</span>
@@ -890,17 +1031,17 @@ export default function App() {
             {/* RIGHT: Result */}
             <div className="right-col">
               {result ? (
-                <ResultPanel result={result} hood={hood} unitType={unitType} onReset={handleReset}/>
+                <ResultPanel result={result} hood={hood} unitType={unitType} onReset={handleReset} t={t}/>
               ) : (
                 <div className="result-panel">
                   <div className="result-placeholder">
                     <div className="result-placeholder-icon">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="1.5" strokeLinecap="round"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                     </div>
-                    <p>Your result will appear here after you fill in your rental details and click <strong>Compare my rent</strong>.</p>
+                    <p>{t('resultPlaceholder')} <strong>{t('btnCompare')}</strong>.</p>
                     <div style={{ marginTop:20, textAlign:"left", border:"1px solid var(--border)", padding:"12px 14px" }}>
-                      <div className="section-label" style={{ marginBottom:8 }}>What you will receive</div>
-                      {["Fair Rent Canada Score (1 to 10)","Estimated fair rent range for your neighbourhood","Price per square foot comparison (if size provided)","Ontario rent control status and estimated legal maximum"].map(item=>(
+                      <div className="section-label" style={{ marginBottom:8 }}>{t('whatYouGet')}</div>
+                      {t('resultItems').map(item=>(
                         <div key={item} style={{ display:"flex", gap:8, alignItems:"flex-start", marginBottom:6 }}>
                           <span style={{ color:"var(--accent)", fontWeight:700, flexShrink:0, marginTop:1 }}>&#10003;</span>
                           <span style={{ fontSize:13, color:"var(--t2)", lineHeight:1.4 }}>{item}</span>
