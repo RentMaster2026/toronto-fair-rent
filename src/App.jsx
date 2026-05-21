@@ -67,7 +67,7 @@ const STRINGS = {
     submissions:"submissions", rentMap:"Rent Map", allCities:"All cities",
     methodology:"Methodology", about:"About", faq:"FAQ", langToggle:"FR",
     pageTitle:`${CITY_NAME} Rent Calculator: Check If Your Rent Is Fair`,
-    pageDesc:`Find out if your ${CITY_NAME} rent is fair. Compare what you pay to real market data from CMHC and local renter submissions. Free. Anonymous. No account required.`,
+    pageDesc:`See what real renters pay in ${CITY_NAME}. Free check in 60 seconds. Anonymous. No signup.`,
     browseByHood:"Browse by neighbourhood",
     formTitle:"Enter your rental details", formSub:"All fields required unless marked optional",
     labelHood:"Neighbourhood", labelUnit:"Unit type", labelRent:"Monthly rent (CAD)", labelYear:"Year moved in",
@@ -80,7 +80,7 @@ const STRINGS = {
     yesRC:"Yes, rent controlled", noRC:"No, not controlled",
     preNovNote:"Units first occupied before Nov. 15, 2018 are subject to Ontario's annual rent increase guideline (2.1% for 2026).",
     selectDots:"Select...", btnCompare:"Compare my rent", btnProcessing:"Processing...",
-    anonNote:"Anonymous · No account required · No personal data stored",
+    anonNote:"Anonymous · No signup · Never sold as personal data",
     errHood:"Select a neighbourhood", errUnit:"Select a unit type",
     errRent:"Enter a valid monthly rent", errYear:y=>`Enter a year between 1980 and ${y}`,
     errPreNov:"Please select one", errSqft:"Enter a size between 100 and 10,000 sq ft",
@@ -127,7 +127,7 @@ const STRINGS = {
     submissions:"soumissions", rentMap:"Carte des loyers", allCities:"Toutes les villes",
     methodology:"Méthodologie", about:"À propos", faq:"FAQ", langToggle:"EN",
     pageTitle:"Calculateur de loyer à Toronto : Votre loyer est-il juste ?",
-    pageDesc:"Découvrez si votre loyer à Toronto est juste. Comparez ce que vous payez aux données réelles de la SCHL et aux soumissions de locataires locaux. Gratuit. Anonyme. Sans inscription.",
+    pageDesc:"Voyez ce que paient les locataires de Toronto. Vérification gratuite en 60 secondes. Anonyme. Sans inscription.",
     browseByHood:"Parcourir par quartier",
     formTitle:"Entrez vos informations de location", formSub:"Tous les champs sont obligatoires sauf indication contraire",
     labelHood:"Quartier", labelUnit:"Type de logement", labelRent:"Loyer mensuel (CAD)", labelYear:"Année d'emménagement",
@@ -509,7 +509,7 @@ function EmailCapture({ city, cityName }) {
   if (status === "success") {
     return (
       <div className="email-cap email-cap-ok">
-        <strong>Thanks — you&apos;re on the list.</strong><br/>
+        <strong>Thanks. You are on the list.</strong><br/>
         We&apos;ll email you the next monthly {cityName} rent report.{" "}
         <button type="button" className="email-cap-x" onClick={()=>setHide(true)}>×</button>
       </div>
@@ -520,7 +520,7 @@ function EmailCapture({ city, cityName }) {
     <div className="email-cap">
       <button type="button" className="email-cap-x" onClick={()=>{ try{localStorage.setItem("frc_email_"+city,"1");}catch{}; setHide(true); }} title="Dismiss">×</button>
       <div className="email-cap-title">Get the monthly {cityName} rent report</div>
-      <div className="email-cap-sub">One email per month with the latest rent benchmarks across {cityName} neighbourhoods. Free, unsubscribe anytime.</div>
+      <div className="email-cap-sub">One email per month. Free. Unsubscribe anytime. We never share your email.</div>
       <form onSubmit={submit} className="email-cap-form">
         <input
           type="email" required value={email}
@@ -534,7 +534,7 @@ function EmailCapture({ city, cityName }) {
         </button>
       </form>
       {status === "error" && (
-        <div style={{fontSize:11,color:"#8b1a1a",marginTop:6}}>Something went wrong — try again or email hello@fairrent.ca</div>
+        <div style={{fontSize:11,color:"#8b1a1a",marginTop:6}}>Something went wrong. Try again or email hello@fairrent.ca</div>
       )}
     </div>
   );
