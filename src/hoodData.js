@@ -1,6 +1,6 @@
 export const TORONTO_HOODS = {
   libertyvillage: {
-    slug: "libertyvillage", name: "Liberty Village",
+    slug: "liberty-village", name: "Liberty Village",
     hoodMult: 1.12, vsAvgPct: 12,
     description: "Liberty Village is a dense, young-professional neighbourhood in Toronto's west end, known for its converted loft buildings, tech offices, and walkable amenities.",
     context: "Newer purpose-built towers near the King Street streetcar tend toward the higher end.",
@@ -21,7 +21,7 @@ export const TORONTO_HOODS = {
     nearbyHoods: ["Yorkville", "Midtown", "Davisville"],
   },
   queenswest: {
-    slug: "queenswest", name: "Queen West",
+    slug: "queen-west", name: "Queen West",
     hoodMult: 1.15, vsAvgPct: 15,
     description: "Queen West is one of Toronto's most vibrant neighbourhoods, known for its arts scene, boutiques, and nightlife. It commands a significant premium over the city average.",
     context: "Units on quieter side streets north of Queen offer slightly better value.",
@@ -35,7 +35,7 @@ export const TORONTO_HOODS = {
     nearbyHoods: ["Annex", "Midtown", "Forest Hill"],
   },
   northyork: {
-    slug: "northyork", name: "North York",
+    slug: "north-york", name: "North York",
     hoodMult: 0.90, vsAvgPct: -10,
     description: "North York offers a mix of suburban and urban living with good transit access via the Yonge-University subway line. Rents are meaningfully below the downtown core.",
     context: "Proximity to subway stations drives rent premiums within North York itself.",
