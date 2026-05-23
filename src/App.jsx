@@ -69,7 +69,7 @@ const STRINGS = {
     pageTitle:`${CITY_NAME} Rent Calculator: Check If Your Rent Is Fair`,
     pageDesc:`See what real renters pay in ${CITY_NAME}. Free check in 60 seconds. Anonymous. No signup.`,
     browseByHood:"Browse by neighbourhood",
-    formTitle:"Enter your rental details", formSub:"All fields required unless marked optional",
+    formTitle:"Enter your rental details", formSub:"Anonymous. No signup. Takes about 60 seconds.",
     labelHood:"Neighbourhood", labelUnit:"Unit type", labelRent:"Monthly rent (CAD)", labelYear:"Year moved in",
     labelSqft:"Unit size in sq ft", sqftOptional:"optional",
     sqftNote:"Adding your unit size improves your score accuracy. We compare your price per square foot to the neighbourhood median.",
@@ -129,7 +129,7 @@ const STRINGS = {
     pageTitle:"Calculateur de loyer à Toronto : Votre loyer est-il juste ?",
     pageDesc:"Voyez ce que paient les locataires de Toronto. Vérification gratuite en 60 secondes. Anonyme. Sans inscription.",
     browseByHood:"Parcourir par quartier",
-    formTitle:"Entrez vos informations de location", formSub:"Tous les champs sont obligatoires sauf indication contraire",
+    formTitle:"Entrez vos informations de location", formSub:"Anonyme. Sans inscription. Environ 60 secondes.",
     labelHood:"Quartier", labelUnit:"Type de logement", labelRent:"Loyer mensuel (CAD)", labelYear:"Année d'emménagement",
     labelSqft:"Superficie du logement en pi²", sqftOptional:"facultatif",
     sqftNote:"Ajouter la superficie améliore la précision de votre indice. Nous comparons votre prix au pied carré à la médiane du quartier.",
@@ -409,6 +409,16 @@ const CSS = `
   .result-thanks{padding:11px 14px;background:#f0f7f2;border-bottom:1px solid #a8d5b5;border-left:3px solid var(--accent);}
   .result-thanks-tag{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;}
   .result-thanks-text{font-size:12px;color:#1a4a28;line-height:1.5;}
+  .help-another{margin-top:14px;padding:14px 16px;background:#fafafa;border:1px solid var(--border);border-left:3px solid var(--accent);}
+  .help-another-tag{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+  .help-another-q{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:4px;}
+  .help-another-d{font-size:12px;color:var(--t2);line-height:1.5;margin-bottom:10px;}
+  .help-another-row{display:flex;gap:6px;flex-wrap:wrap;}
+  .help-another-btn{flex-grow:1;min-width:120px;padding:9px 10px;font-size:12px;font-weight:700;text-decoration:none;text-align:center;cursor:pointer;border:1px solid;border-radius:2px;}
+  .help-another-btn-fill{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .help-another-btn-fill:hover{background:#15492a;}
+  .help-another-btn-out{background:#fff;color:var(--accent);border-color:var(--accent);}
+  .help-another-btn-out:hover{background:#f0f7f2;}
     .result-header{padding:12px 14px;border-bottom:1px solid var(--border);background:#fafafa;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}
   .result-header-meta{font-size:11px;color:var(--t3);margin-top:2px;}
   .result-verdict-badge{font-size:11px;font-weight:700;padding:3px 8px;letter-spacing:0.04em;white-space:nowrap;}
@@ -805,6 +815,17 @@ function ResultPanel({ result, hood, unitType, onReset, t }) {
           </div>
         )}
 
+        <div className="help-another">
+          <div className="help-another-tag">Help another renter</div>
+          <div className="help-another-q">Was this helpful?</div>
+          <div className="help-another-d">Share Fair Rent with someone else in Toronto. The more renters submit, the more useful the data becomes for everyone.</div>
+          <div className="help-another-row">
+            <a className="help-another-btn help-another-btn-fill" href={"https://twitter.com/intent/tweet?text="+encodeURIComponent("I just checked if my "+CITY_NAME+" rent is fair on fairrent.ca")} target="_blank" rel="noopener noreferrer">Share on X</a>
+            <a className="help-another-btn help-another-btn-fill" href={"https://www.reddit.com/submit?url="+SHARE_URL+"&title="+encodeURIComponent("Fair Rent Canada — see what real renters pay")} target="_blank" rel="noopener noreferrer">Share on Reddit</a>
+            <button className="help-another-btn help-another-btn-out" onClick={copyLink}>{copied ? t('copied') : t('copyLink')}</button>
+          </div>
+        </div>
+
         <EmailCapture city="toronto" cityName="Toronto"/>
       </div>
     </div>
@@ -1060,11 +1081,13 @@ export default function App() {
                       <label className="field-label">{t('labelRent')}</label>
                       <input className="f-input" type="number" placeholder="e.g. 2200" value={rent} onChange={e=>setRent(e.target.value)} style={{ borderColor:errors.rent?"#8b1a1a":undefined }}/>
                       {errors.rent&&<div className="field-error">{errors.rent}</div>}
+                      <div className="field-note">{t('rentMicro')}</div>
                     </div>
                     <div>
                       <label className="field-label">{t('labelYear')}</label>
                       <input className="f-input" type="number" placeholder={String(curYear)} value={moveInYear} onChange={e=>setMoveInYear(e.target.value)} style={{ borderColor:errors.moveInYear?"#8b1a1a":undefined }}/>
                       {errors.moveInYear&&<div className="field-error">{errors.moveInYear}</div>}
+                      <div className="field-note">{t('yearMicro')}</div>
                     </div>
                   </div>
 
