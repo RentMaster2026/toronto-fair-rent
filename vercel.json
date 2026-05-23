@@ -76,7 +76,10 @@
       "source": "/forest-hill",
       "destination": "/neighbourhoods/forest-hill.html"
     },
-    { "source": "/map", "destination": "/map.html" },
+    {
+      "source": "/map",
+      "destination": "/map.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
