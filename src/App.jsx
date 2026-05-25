@@ -985,6 +985,7 @@ export default function App() {
       <style>{CSS}</style>
       <div style={{ minHeight:"100vh", background:"var(--bg)" }}>
         <Nav
+          homeHref="https://fairrent.ca"
           citySuffix={"Toronto"}
           actions={{
             onRentMap:     () => { window.location.href = "https://fairrent.ca/map"; },
