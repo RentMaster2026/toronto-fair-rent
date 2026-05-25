@@ -65,12 +65,12 @@ const MEDIAN_PSF = { bachelor:4.20, "1br":3.60, "2br":3.20, "3br":2.90, "3plus":
 const STRINGS = {
   en: {
     submissions:"submissions", rentMap:"Rent Map", allCities:"All cities",
-    methodology:"Methodology", about:"About", faq:"FAQ", langToggle:"FR",
+    methodology:"Methodology", about:"About", faq:"FAQ", langToggle:"Français",
     pageTitle:`${CITY_NAME} Rent Calculator: Check If Your Rent Is Fair`,
     pageDesc:`See what real renters pay in ${CITY_NAME}. Free check in 60 seconds. Anonymous. No signup.`,
     browseByHood:"Browse by neighbourhood",
     formTitle:"Enter your rental details", formSub:"Anonymous. No signup. Takes about 60 seconds.",
-    labelHood:"Neighbourhood", labelUnit:"Unit type", labelRent:"Monthly rent (CAD)", labelYear:"Year moved in",
+    labelHood:"Neighbourhood", labelUnit:"Unit type", labelRent:"Monthly rent (CAD)", labelYear:"Year moved in", rentMicro:"What you actually pay each month, including any included parking or utilities.", yearMicro:"Used to compare against rents from the same year and apply rent control where it applies.",
     labelSqft:"Unit size in sq ft", sqftOptional:"optional",
     sqftNote:"Adding your unit size improves your score accuracy. We compare your price per square foot to the neighbourhood median.",
     labelParking:"Parking", parkingSub:"+$250/mo added to benchmark",
@@ -995,7 +995,7 @@ export default function App() {
               )}
               <button
                 onClick={toggleLang}
-                style={{ background:"rgba(255,255,255,0.12)", border:"1px solid rgba(255,255,255,0.25)", color:"#fff", fontFamily:"var(--sans)", fontSize:11, fontWeight:700, padding:"3px 8px", cursor:"pointer", letterSpacing:".04em", borderRadius:3, flexShrink:0 }}
+                style={{ background:"transparent", border:"1px solid rgba(255,255,255,0.3)", color:"#fff", fontFamily:"var(--sans)", fontSize:12, fontWeight:500, padding:"5px 12px", cursor:"pointer", letterSpacing:".02em", borderRadius:3, flexShrink:0 }}
                 title={lang==='en'?"Passer en français":"Switch to English"}
               >{t('langToggle')}</button>
             </div>
