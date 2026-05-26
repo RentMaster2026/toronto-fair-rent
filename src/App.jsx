@@ -571,65 +571,8 @@ const CSS = `
   button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px;}
 `;
 
-// ─── Email Capture ────────────────────────────────────────────────────────────
-
-function EmailCapture({ city, cityName }) {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle");
-  const [hide, setHide] = useState(() => {
-    try { return localStorage.getItem("frc_email_"+city)==="1"; } catch { return false; }
-  });
-  if (hide) return null;
-
-  async function submit(e) {
-    e.preventDefault();
-    if (!email.trim()) return;
-    setStatus("submitting");
-    const { error } = await supabase.from("email_subscribers").insert([{
-      email: email.trim().toLowerCase(),
-      city,
-      source: "result_panel"
-    }]);
-    if (error && !String(error.message||"").toLowerCase().includes("duplicate")) {
-      setStatus("error"); return;
-    }
-    try { localStorage.setItem("frc_email_"+city, "1"); } catch {}
-    setStatus("success");
-  }
-
-  if (status === "success") {
-    return (
-      <div className="email-cap email-cap-ok">
-        <strong>Thanks. You are on the list.</strong><br/>
-        We&apos;ll email you the next monthly {cityName} rent report.{" "}
-        <button type="button" className="email-cap-x" aria-label="Dismiss" onClick={()=>setHide(true)}>×</button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="email-cap">
-      <button type="button" className="email-cap-x" aria-label="Dismiss" onClick={()=>{ try{localStorage.setItem("frc_email_"+city,"1");}catch{}; setHide(true); }} title="Dismiss">×</button>
-      <div className="email-cap-title">Get the monthly {cityName} rent report</div>
-      <div className="email-cap-sub">One email per month. Free. Unsubscribe anytime. We never share your email.</div>
-      <form onSubmit={submit} className="email-cap-form">
-        <input
-          type="email" required value={email}
-          onChange={e=>setEmail(e.target.value)}
-          placeholder="you@email.com"
-          className="email-cap-in"
-          autoComplete="email"
-        />
-        <button type="submit" className="email-cap-btn" disabled={status==="submitting"}>
-          {status==="submitting" ? "..." : "Subscribe"}
-        </button>
-      </form>
-      {status === "error" && (
-        <div style={{fontSize:11,color:"#8b1a1a",marginTop:6}}>Something went wrong. Try again or email hello@fairrent.ca</div>
-      )}
-    </div>
-  );
-}
+// EmailCapture (monthly rent report sign-up) removed. The site now
+// prioritises rent submissions and calculator usage over email collection.
 
 // ─── Result Panel ─────────────────────────────────────────────────────────────
 
@@ -896,7 +839,6 @@ function ResultPanel({ result, hood, unitType, onReset, t }) {
           </div>
         </div>
 
-        <EmailCapture city="toronto" cityName="Toronto"/>
       </div>
     </div>
   );
@@ -1027,6 +969,18 @@ export default function App() {
 
     setResult({rent:rentNum,range,conf,pos,breakdown:bd,moveinBench,guidelineCap,isRentControlled:preNov2018===true,sameYear,moveInYear:yr,communityN,score:scoreData});
 
+    // Smooth-scroll to the result so users (especially on mobile, where the
+    // result panel sits below the form) immediately see their score. Two
+    // rAFs let React commit the result panel before we measure its position.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = document.getElementById("result");
+        if (el && typeof el.scrollIntoView === "function") {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
     try {
       const last=Number(localStorage.getItem(COOLDOWN_KEY)??0);
       if(Date.now()-last>=COOLDOWN_MS){
@@ -1070,7 +1024,7 @@ export default function App() {
           actions={{
             onBlog:           () => { window.location.href = "https://fairrent.ca/blog"; },
             onExploreCities:  () => { window.location.href = "https://fairrent.ca/"; },
-            onNeighbourhoods: () => { window.location.href = "https://fairrent.ca/map"; },
+            onNeighbourhoods: () => { window.location.href = "https://fairrent.ca/map?city=toronto"; },
             onSubmitRent:     () => { const el=document.getElementById("form"); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); else window.scrollTo({top:0,behavior:"smooth"}); },
             onAbout:          () => { window.location.href = "https://fairrent.ca/about"; },
             onToggleLang:     toggleLang,
@@ -1101,7 +1055,7 @@ export default function App() {
             <p className="city-hero-sub"><strong>{t('heroSubStrong')}</strong> {t('heroSubRest')}</p>
             <div className="city-hero-actions">
               <button className="city-hero-btn city-hero-btn-primary" onClick={()=>{const el=document.getElementById("form"); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); window.frc?.track?.('city_hero_primary_click',{city:CITY});}}>{t('heroCtaPrimary')}</button>
-              <a className="city-hero-btn city-hero-btn-ghost" href="https://fairrent.ca/map" onClick={()=>window.frc?.track?.('city_hero_explore_click',{city:CITY})}>{t('heroCtaSecondary')}</a>
+              <a className="city-hero-btn city-hero-btn-ghost" href="https://fairrent.ca/map?city=toronto" onClick={()=>window.frc?.track?.('city_hero_explore_click',{city:CITY})}>{t('heroCtaSecondary')}</a>
             </div>
             <div className="city-hero-ticker" aria-live="polite">
               {countLoaded ? (
@@ -1264,7 +1218,7 @@ export default function App() {
             </div>
 
             {/* RIGHT: Result */}
-            <div className="right-col">
+            <div className="right-col" id="result" style={{scrollMarginTop:80}}>
               {result ? (
                 <ResultPanel result={result} hood={hood} unitType={unitType} onReset={handleReset} t={t}/>
               ) : (
