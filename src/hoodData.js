@@ -5,6 +5,11 @@ export const TORONTO_HOODS = {
     description: "Liberty Village is a dense, young-professional neighbourhood in Toronto's west end, known for its converted loft buildings, tech offices, and walkable amenities.",
     context: "Newer purpose-built towers near the King Street streetcar tend toward the higher end.",
     nearbyHoods: ["Parkdale", "Queen West", "King West"],
+    localTips: [
+      "Almost everything is condo-rental; expect maintenance fees baked into the asking rent and a building-by-building lottery on amenities (pool, gym, party room).",
+      "504 King streetcar is the main transit; it's often packed in both directions. If you commute downtown, walking through Bathurst is a realistic backup.",
+      "Lake Shore traffic and Exhibition events spike weekend noise. Units facing south or west pick up more of it than units tucked into interior streets.",
+    ],
   },
   leslieville: {
     slug: "leslieville", name: "Leslieville",
@@ -12,6 +17,11 @@ export const TORONTO_HOODS = {
     description: "Leslieville is a popular east-end neighbourhood known for its independent cafes, restaurants, and mix of Victorian homes and newer rental buildings.",
     context: "Units closer to Queen Street East tend to command slightly higher rents.",
     nearbyHoods: ["Riverside", "East End", "Distillery District"],
+    localTips: [
+      "Most rentals are upper floors of Victorian houses or low-rise walk-ups. Expect small bathrooms, original windows, and street parking only.",
+      "The 501 Queen streetcar runs all hours but is slow. Plan extra time if you commute downtown, or bike — the area is flat and well-serviced by lanes.",
+      "Queen East between Pape and Coxwell is the main amenity strip. Listings further north toward Gerrard typically rent for less but the daily-life convenience drops noticeably.",
+    ],
   },
   annex: {
     slug: "annex", name: "Annex",
@@ -19,6 +29,11 @@ export const TORONTO_HOODS = {
     description: "The Annex is a historic, tree-lined neighbourhood near the University of Toronto, popular with students, academics, and young professionals.",
     context: "Proximity to U of T and Bloor Street drives strong year-round rental demand.",
     nearbyHoods: ["Yorkville", "Midtown", "Davisville"],
+    localTips: [
+      "Heavy U of T tenancy means September turnover dominates the calendar. Start looking by May for the best selection of academic-year leases.",
+      "Most stock is upper floors of large Victorian houses split into 2-4 units. Floor-by-floor heating, shared laundry in the basement, and quirky layouts are the norm.",
+      "Walkable to Bloor's full subway corridor and U of T's downtown campus. The walkability is what supports the rent — units far from Bloor are generally easier to negotiate.",
+    ],
   },
   queenswest: {
     slug: "queen-west", name: "Queen West",
@@ -26,6 +41,11 @@ export const TORONTO_HOODS = {
     description: "Queen West is one of Toronto's most vibrant neighbourhoods, known for its arts scene, boutiques, and nightlife. It commands a significant premium over the city average.",
     context: "Units on quieter side streets north of Queen offer slightly better value.",
     nearbyHoods: ["Parkdale", "Liberty Village", "Kensington Market"],
+    localTips: [
+      "Bar and live-music traffic is real, particularly Thursday through Saturday. Ask about the unit's specific cross street and how many windows face Queen.",
+      "Mix of condo rentals near Bathurst and older 3-storey walk-ups closer to Trinity Bellwoods. The walk-ups are cheaper but typically lack laundry and elevators.",
+      "Trinity Bellwoods Park access is a major lifestyle factor and pushes nearby rents higher. A unit one block off the park is meaningfully cheaper than one on the park's edge.",
+    ],
   },
   yorkville: {
     slug: "yorkville", name: "Yorkville",
@@ -33,6 +53,11 @@ export const TORONTO_HOODS = {
     description: "Yorkville is Toronto's most prestigious neighbourhood, home to luxury condos, high-end retail, and some of the city's highest rents.",
     context: "This is consistently one of the most expensive rental markets in Canada.",
     nearbyHoods: ["Annex", "Midtown", "Forest Hill"],
+    localTips: [
+      "Almost all rentals are condo-rentals in newer high-rise towers. Maintenance fees, parking, locker, and short-term-rental rules vary widely by building.",
+      "Two subway lines meet at Bloor-Yonge so a car is genuinely optional. Buildings with parking spots charge a premium of $200-400/mo for them.",
+      "Many units come unfurnished but with high-end appliances. Listings that look 'cheap' relative to the neighbourhood usually have a catch — low floor, no view, no parking, or short-term-rental-only.",
+    ],
   },
   northyork: {
     slug: "north-york", name: "North York",
@@ -40,6 +65,11 @@ export const TORONTO_HOODS = {
     description: "North York offers a mix of suburban and urban living with good transit access via the Yonge-University subway line. Rents are meaningfully below the downtown core.",
     context: "Proximity to subway stations drives rent premiums within North York itself.",
     nearbyHoods: ["Willowdale", "Lawrence Park", "Midtown"],
+    localTips: [
+      "Subway proximity is the single biggest rent driver. A 5-minute walk to a Line 1 station can mean $300+/mo over the same unit 15 minutes away.",
+      "Mostly older mid-rise and high-rise apartment buildings, many rent-controlled. Confirm the building's construction date — pre-November 2018 buildings have provincial rent control on existing tenancies.",
+      "Yonge corridor (North York Centre, Sheppard) has the densest amenities. Listings tucked east or west of Yonge are typically cheaper but more car-dependent.",
+    ],
   },
   scarborough: {
     slug: "scarborough", name: "Scarborough",
@@ -47,6 +77,11 @@ export const TORONTO_HOODS = {
     description: "Scarborough is Toronto's most affordable major district, offering significantly lower rents than the downtown core while still connected by the Bloor-Danforth subway.",
     context: "Rents are well below the city average, making Scarborough one of Toronto's best value options.",
     nearbyHoods: ["East End", "North York", "East York"],
+    localTips: [
+      "Huge district — rents and commute times vary dramatically. Kennedy and Warden stations are the only subway connections; everything further east relies on buses or the future LRT.",
+      "Most stock is older apartment towers from the 1960s-70s, many rent-controlled. Confirm what utilities are included — older buildings often roll heat and water into rent.",
+      "Bluffs, parks, and waterfront access are real lifestyle wins for families. Trade-off is a car-dependent daily life unless you're near the subway corridor.",
+    ],
   },
   distillery: {
     slug: "distillery", name: "Distillery District",
@@ -54,6 +89,11 @@ export const TORONTO_HOODS = {
     description: "The Distillery District is a historic neighbourhood of converted Victorian industrial buildings now housing condos, restaurants, and galleries.",
     context: "Premium finishes and historic character push rents toward the higher end of the city.",
     nearbyHoods: ["St. Lawrence", "Leslieville", "Riverside"],
+    localTips: [
+      "Nearly all rentals are condo-rentals in newer towers built around the heritage cobblestone core. Maintenance fees, locker access and parking vary widely.",
+      "Streetcar access is reasonable but the closest subway is a 15-minute walk. Many residents bike or use Toronto Bike Share.",
+      "Major events, holiday markets, and weekend tourists make the core busy year-round. Units on the quieter Mill Street side are calmer than those on Cherry Street.",
+    ],
   },
   parkdale: {
     slug: "parkdale", name: "Parkdale",
@@ -61,6 +101,11 @@ export const TORONTO_HOODS = {
     description: "Parkdale is a diverse, evolving neighbourhood in Toronto's west end with a strong arts community and a mix of older walk-up apartments and newer builds.",
     context: "Rents are slightly below the city average, offering relative value close to downtown.",
     nearbyHoods: ["Queen West", "Liberty Village", "Roncesvalles"],
+    localTips: [
+      "Lots of older rent-controlled high-rises along Jameson and along the Queensway. These are some of the most genuinely affordable options inside the old city of Toronto.",
+      "Streetcar access on Queen and King is the main commute story. Both lines are busy and slow during rush hour — bike commuting is common.",
+      "Building condition varies more in Parkdale than elsewhere. See the unit in person, not just photos, before committing.",
+    ],
   },
   stlawrence: {
     slug: "st-lawrence", name: "St. Lawrence",
@@ -68,6 +113,11 @@ export const TORONTO_HOODS = {
     description: "St. Lawrence is a well-established downtown neighbourhood known for the St. Lawrence Market, strong walkability, and a mix of condo and rental buildings close to the financial core.",
     context: "Central location and market proximity make this a consistently high-demand area.",
     nearbyHoods: ["Distillery District", "Leslieville", "Financial District"],
+    localTips: [
+      "Walking distance to the Financial District and Union Station — favourite of professionals who don't want a commute.",
+      "Mix of older rent-controlled rentals north of King and newer condo-rentals south. The condos have better amenities, the older buildings have utilities included.",
+      "Saturday St. Lawrence Market traffic and tourist foot traffic make weekend mornings busy. The neighbourhood is meaningfully quieter mid-week.",
+    ],
   },
   etobicoke: {
     slug: "etobicoke", name: "Etobicoke",
@@ -75,6 +125,11 @@ export const TORONTO_HOODS = {
     description: "Etobicoke is a large western district of Toronto offering a mix of suburban and urban living. It has excellent highway access and a diverse range of rental options from high-rise towers to townhomes.",
     context: "Rents are well below the city average, making Etobicoke one of Toronto's better-value options for families.",
     nearbyHoods: ["Roncesvalles", "Parkdale", "Mississauga"],
+    localTips: [
+      "Huge area — rents and commute vary significantly between The Queensway corridor, Mimico, Kipling/Islington, and points further west.",
+      "Mimico GO station gets you downtown in 12 minutes — a real differentiator vs the suburban experience further north.",
+      "Older high-rise stock along Bloor and The Queensway is often rent-controlled. Newer condo-towers near Park Lawn and Humber Bay carry both higher rent and condo-fee pass-throughs.",
+    ],
   },
   kingwest: {
     slug: "king-west", name: "King West",
@@ -82,6 +137,11 @@ export const TORONTO_HOODS = {
     description: "King West is one of Toronto's most sought-after neighbourhoods for young professionals, featuring a dense corridor of restaurants, bars, and mixed-use condo towers along King Street West.",
     context: "Newer condo rentals dominate the market. High demand from tech and finance workers keeps vacancy low.",
     nearbyHoods: ["Liberty Village", "Queen West", "Entertainment District"],
+    localTips: [
+      "Almost everything is condo-rental. Building amenities (gym, pool, party room) vary widely — they're effectively part of what you're paying for.",
+      "The 504 King streetcar is the main transit but is regularly delayed by traffic. Walking to St. Andrew or Osgoode subway stations is a realistic 15-20 minute option.",
+      "Thursday-Saturday bar noise on King and Adelaide is significant. Higher-floor units and back-facing balconies are dramatically quieter.",
+    ],
   },
   kensingtonmarket: {
     slug: "kensington-market", name: "Kensington Market",
@@ -89,6 +149,11 @@ export const TORONTO_HOODS = {
     description: "Kensington Market is one of Toronto's most distinctive and eclectic neighbourhoods, known for its independent vendors, cultural diversity, and strong sense of community.",
     context: "Rents are close to the city average. Older housing stock and walk-up apartments are common.",
     nearbyHoods: ["Annex", "Queen West", "Chinatown"],
+    localTips: [
+      "Almost no new construction. Most rentals are above storefronts or in old subdivided Victorians — expect quirky layouts, narrow staircases and no elevators.",
+      "Pedestrian-Sunday market days and weekend tourist traffic make the core blocks noisy and busy. Units one street off the main grid are dramatically quieter.",
+      "Parking is effectively impossible and not a real option. Most renters here don't have a car.",
+    ],
   },
   roncesvalles: {
     slug: "roncesvalles", name: "Roncesvalles",
@@ -96,6 +161,11 @@ export const TORONTO_HOODS = {
     description: "Roncesvalles is a beloved west-end neighbourhood with a Polish heritage, tree-lined streets, independent shops, and a strong community feel. It is popular with families and young professionals alike.",
     context: "Rents are modestly above the city average. Demand is driven by the neighbourhood's character and proximity to the lake.",
     nearbyHoods: ["Parkdale", "Etobicoke", "High Park"],
+    localTips: [
+      "Lots of family rentals — upper duplexes and triplexes in 2-3 storey houses. Many include a backyard or private deck access.",
+      "504 King and 506 College streetcars are the main transit. Both connect to subway stations but are slow during rush hour.",
+      "High Park access is a major lifestyle draw. Units on the west side of Roncesvalles closer to Sorauren Park tend to be quieter than those near busy Queen.",
+    ],
   },
   midtown: {
     slug: "midtown", name: "Midtown",
@@ -103,6 +173,11 @@ export const TORONTO_HOODS = {
     description: "Midtown Toronto encompasses established neighbourhoods like Davisville and Mount Pleasant, offering a balance of urban amenities, transit access, and quieter residential streets.",
     context: "Strong subway access and proximity to premier schools keep demand consistently above the city average.",
     nearbyHoods: ["Yorkville", "North York", "Annex"],
+    localTips: [
+      "Yonge Line 1 subway access drives most rentals. A 5-minute walk to Davisville or Eglinton vs 15 minutes shows up in the rent.",
+      "Mix of pre-2018 rent-controlled high-rises along Yonge and newer condo-rentals further east and west. The older buildings often include utilities; the newer ones almost never do.",
+      "Eglinton Crosstown LRT (opening soon) is expected to shift some demand east-west. Units near future stations may see rent pressure increase.",
+    ],
   },
   cabbagetown: {
     slug: "cabbagetown", name: "Cabbagetown",
@@ -110,6 +185,11 @@ export const TORONTO_HOODS = {
     description: "Cabbagetown is one of Toronto's oldest and most charming neighbourhoods, known for its preserved Victorian row houses and quiet, walkable streets east of downtown.",
     context: "Heritage character and central location support rents moderately above the city average.",
     nearbyHoods: ["St. Lawrence", "Distillery District", "Regent Park"],
+    localTips: [
+      "Almost all rentals are floors of Victorian row houses — expect small kitchens, single bathrooms, and original windows in many units.",
+      "Closest subway is Sherbourne (about 10 minutes walk) or Castle Frank. The 505 Dundas streetcar is the other main transit option.",
+      "Riverdale Park access and the strong heritage character are the main rent drivers. Units east of Parliament Street near the park tend to be the most expensive.",
+    ],
   },
   harbourfront: {
     slug: "harbourfront", name: "Harbourfront",
@@ -117,6 +197,11 @@ export const TORONTO_HOODS = {
     description: "Harbourfront is Toronto's waterfront neighbourhood, offering stunning lake views, a mix of luxury condos, and easy access to the PATH and financial district.",
     context: "Lake views and premium finishes push rents well above the city average. Newer condo towers dominate.",
     nearbyHoods: ["King West", "St. Lawrence", "Financial District"],
+    localTips: [
+      "All condo-rentals. Lake-facing units carry a major premium over north-facing units in the same building — sometimes $300-500/mo for the same square footage.",
+      "Walking distance to the Financial District via the PATH means you never need a car or even a coat in winter for the commute.",
+      "Gardiner Expressway noise affects lower floors on the north side of buildings. Higher floors are dramatically quieter.",
+    ],
   },
   eastyork: {
     slug: "east-york", name: "East York",
@@ -124,6 +209,11 @@ export const TORONTO_HOODS = {
     description: "East York is a quieter inner-suburb east of the downtown core, known for its bungalow streets, good parks, and Danforth Avenue amenities. It offers solid value relative to the city average.",
     context: "Rents are below the city average. Good Bloor-Danforth subway access supports consistent demand.",
     nearbyHoods: ["Scarborough", "Leslieville", "North York"],
+    localTips: [
+      "Pape, Donlands and Greenwood subway stations are the main commute story. Rents within a 10-minute walk of those stations are noticeably higher.",
+      "Mostly older mid-rise apartments and upper floors of single-family houses. Many of the older apartment buildings are rent-controlled.",
+      "The Danforth's restaurant strip is a real lifestyle draw. Units within walking distance of Greektown rent at a small premium.",
+    ],
   },
   foresthill: {
     slug: "forest-hill", name: "Forest Hill",
@@ -131,6 +221,11 @@ export const TORONTO_HOODS = {
     description: "Forest Hill is one of Toronto's most affluent neighbourhoods, with prestigious private schools, large homes, and a quiet, established character that commands significant rent premiums.",
     context: "Rental supply is limited and demand from families and executives keeps prices consistently elevated.",
     nearbyHoods: ["Yorkville", "Midtown", "Annex"],
+    localTips: [
+      "Rental supply is genuinely thin — most properties are owner-occupied. Listings move quickly.",
+      "Most rentals are upper floors of large homes or coach houses. Expect quirky layouts, private entrances, and limited tenant history to reference.",
+      "St. Clair West and Eglinton subway/streetcar stops are within walking distance from much of the neighbourhood but Forest Hill itself has very limited transit inside its boundaries.",
+    ],
   },
 };
 
