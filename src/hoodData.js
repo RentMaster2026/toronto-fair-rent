@@ -19,7 +19,7 @@ export const TORONTO_HOODS = {
     nearbyHoods: ["Riverside", "East End", "Distillery District"],
     localTips: [
       "Most rentals are upper floors of Victorian houses or low-rise walk-ups. Expect small bathrooms, original windows, and street parking only.",
-      "The 501 Queen streetcar runs all hours but is slow. Plan extra time if you commute downtown, or bike — the area is flat and well-serviced by lanes.",
+      "The 501 Queen streetcar runs all hours but is slow. Plan extra time if you commute downtown, or bike, the area is flat and well-serviced by lanes.",
       "Queen East between Pape and Coxwell is the main amenity strip. Listings further north toward Gerrard typically rent for less but the daily-life convenience drops noticeably.",
     ],
   },
@@ -32,7 +32,7 @@ export const TORONTO_HOODS = {
     localTips: [
       "Heavy U of T tenancy means September turnover dominates the calendar. Start looking by May for the best selection of academic-year leases.",
       "Most stock is upper floors of large Victorian houses split into 2-4 units. Floor-by-floor heating, shared laundry in the basement, and quirky layouts are the norm.",
-      "Walkable to Bloor's full subway corridor and U of T's downtown campus. The walkability is what supports the rent — units far from Bloor are generally easier to negotiate.",
+      "Walkable to Bloor's full subway corridor and U of T's downtown campus. The walkability is what supports the rent, units far from Bloor are generally easier to negotiate.",
     ],
   },
   queenswest: {
@@ -56,7 +56,7 @@ export const TORONTO_HOODS = {
     localTips: [
       "Almost all rentals are condo-rentals in newer high-rise towers. Maintenance fees, parking, locker, and short-term-rental rules vary widely by building.",
       "Two subway lines meet at Bloor-Yonge so a car is genuinely optional. Buildings with parking spots charge a premium of $200-400/mo for them.",
-      "Many units come unfurnished but with high-end appliances. Listings that look 'cheap' relative to the neighbourhood usually have a catch — low floor, no view, no parking, or short-term-rental-only.",
+      "Many units come unfurnished but with high-end appliances. Listings that look 'cheap' relative to the neighbourhood usually have a catch, low floor, no view, no parking, or short-term-rental-only.",
     ],
   },
   northyork: {
@@ -67,7 +67,7 @@ export const TORONTO_HOODS = {
     nearbyHoods: ["Willowdale", "Lawrence Park", "Midtown"],
     localTips: [
       "Subway proximity is the single biggest rent driver. A 5-minute walk to a Line 1 station can mean $300+/mo over the same unit 15 minutes away.",
-      "Mostly older mid-rise and high-rise apartment buildings, many rent-controlled. Confirm the building's construction date — pre-November 2018 buildings have provincial rent control on existing tenancies.",
+      "Mostly older mid-rise and high-rise apartment buildings, many rent-controlled. Confirm the building's construction date, pre-November 2018 buildings have provincial rent control on existing tenancies.",
       "Yonge corridor (North York Centre, Sheppard) has the densest amenities. Listings tucked east or west of Yonge are typically cheaper but more car-dependent.",
     ],
   },
@@ -78,8 +78,8 @@ export const TORONTO_HOODS = {
     context: "Rents are well below the city average, making Scarborough one of Toronto's best value options.",
     nearbyHoods: ["East End", "North York", "East York"],
     localTips: [
-      "Huge district — rents and commute times vary dramatically. Kennedy and Warden stations are the only subway connections; everything further east relies on buses or the future LRT.",
-      "Most stock is older apartment towers from the 1960s-70s, many rent-controlled. Confirm what utilities are included — older buildings often roll heat and water into rent.",
+      "Huge district, rents and commute times vary dramatically. Kennedy and Warden stations are the only subway connections; everything further east relies on buses or the future LRT.",
+      "Most stock is older apartment towers from the 1960s-70s, many rent-controlled. Confirm what utilities are included, older buildings often roll heat and water into rent.",
       "Bluffs, parks, and waterfront access are real lifestyle wins for families. Trade-off is a car-dependent daily life unless you're near the subway corridor.",
     ],
   },
@@ -103,7 +103,7 @@ export const TORONTO_HOODS = {
     nearbyHoods: ["Queen West", "Liberty Village", "Roncesvalles"],
     localTips: [
       "Lots of older rent-controlled high-rises along Jameson and along the Queensway. These are some of the most genuinely affordable options inside the old city of Toronto.",
-      "Streetcar access on Queen and King is the main commute story. Both lines are busy and slow during rush hour — bike commuting is common.",
+      "Streetcar access on Queen and King is the main commute story. Both lines are busy and slow during rush hour, bike commuting is common.",
       "Building condition varies more in Parkdale than elsewhere. See the unit in person, not just photos, before committing.",
     ],
   },
@@ -114,7 +114,7 @@ export const TORONTO_HOODS = {
     context: "Central location and market proximity make this a consistently high-demand area.",
     nearbyHoods: ["Distillery District", "Leslieville", "Financial District"],
     localTips: [
-      "Walking distance to the Financial District and Union Station — favourite of professionals who don't want a commute.",
+      "Walking distance to the Financial District and Union Station, favourite of professionals who don't want a commute.",
       "Mix of older rent-controlled rentals north of King and newer condo-rentals south. The condos have better amenities, the older buildings have utilities included.",
       "Saturday St. Lawrence Market traffic and tourist foot traffic make weekend mornings busy. The neighbourhood is meaningfully quieter mid-week.",
     ],
@@ -126,8 +126,8 @@ export const TORONTO_HOODS = {
     context: "Rents are well below the city average, making Etobicoke one of Toronto's better-value options for families.",
     nearbyHoods: ["Roncesvalles", "Parkdale", "Mississauga"],
     localTips: [
-      "Huge area — rents and commute vary significantly between The Queensway corridor, Mimico, Kipling/Islington, and points further west.",
-      "Mimico GO station gets you downtown in 12 minutes — a real differentiator vs the suburban experience further north.",
+      "Huge area, rents and commute vary significantly between The Queensway corridor, Mimico, Kipling/Islington, and points further west.",
+      "Mimico GO station gets you downtown in 12 minutes, a real differentiator vs the suburban experience further north.",
       "Older high-rise stock along Bloor and The Queensway is often rent-controlled. Newer condo-towers near Park Lawn and Humber Bay carry both higher rent and condo-fee pass-throughs.",
     ],
   },
@@ -138,7 +138,7 @@ export const TORONTO_HOODS = {
     context: "Newer condo rentals dominate the market. High demand from tech and finance workers keeps vacancy low.",
     nearbyHoods: ["Liberty Village", "Queen West", "Entertainment District"],
     localTips: [
-      "Almost everything is condo-rental. Building amenities (gym, pool, party room) vary widely — they're effectively part of what you're paying for.",
+      "Almost everything is condo-rental. Building amenities (gym, pool, party room) vary widely, they're effectively part of what you're paying for.",
       "The 504 King streetcar is the main transit but is regularly delayed by traffic. Walking to St. Andrew or Osgoode subway stations is a realistic 15-20 minute option.",
       "Thursday-Saturday bar noise on King and Adelaide is significant. Higher-floor units and back-facing balconies are dramatically quieter.",
     ],
@@ -150,7 +150,7 @@ export const TORONTO_HOODS = {
     context: "Rents are close to the city average. Older housing stock and walk-up apartments are common.",
     nearbyHoods: ["Annex", "Queen West", "Chinatown"],
     localTips: [
-      "Almost no new construction. Most rentals are above storefronts or in old subdivided Victorians — expect quirky layouts, narrow staircases and no elevators.",
+      "Almost no new construction. Most rentals are above storefronts or in old subdivided Victorians, expect quirky layouts, narrow staircases and no elevators.",
       "Pedestrian-Sunday market days and weekend tourist traffic make the core blocks noisy and busy. Units one street off the main grid are dramatically quieter.",
       "Parking is effectively impossible and not a real option. Most renters here don't have a car.",
     ],
@@ -162,7 +162,7 @@ export const TORONTO_HOODS = {
     context: "Rents are modestly above the city average. Demand is driven by the neighbourhood's character and proximity to the lake.",
     nearbyHoods: ["Parkdale", "Etobicoke", "High Park"],
     localTips: [
-      "Lots of family rentals — upper duplexes and triplexes in 2-3 storey houses. Many include a backyard or private deck access.",
+      "Lots of family rentals, upper duplexes and triplexes in 2-3 storey houses. Many include a backyard or private deck access.",
       "504 King and 506 College streetcars are the main transit. Both connect to subway stations but are slow during rush hour.",
       "High Park access is a major lifestyle draw. Units on the west side of Roncesvalles closer to Sorauren Park tend to be quieter than those near busy Queen.",
     ],
@@ -186,7 +186,7 @@ export const TORONTO_HOODS = {
     context: "Heritage character and central location support rents moderately above the city average.",
     nearbyHoods: ["St. Lawrence", "Distillery District", "Regent Park"],
     localTips: [
-      "Almost all rentals are floors of Victorian row houses — expect small kitchens, single bathrooms, and original windows in many units.",
+      "Almost all rentals are floors of Victorian row houses, expect small kitchens, single bathrooms, and original windows in many units.",
       "Closest subway is Sherbourne (about 10 minutes walk) or Castle Frank. The 505 Dundas streetcar is the other main transit option.",
       "Riverdale Park access and the strong heritage character are the main rent drivers. Units east of Parliament Street near the park tend to be the most expensive.",
     ],
@@ -198,7 +198,7 @@ export const TORONTO_HOODS = {
     context: "Lake views and premium finishes push rents well above the city average. Newer condo towers dominate.",
     nearbyHoods: ["King West", "St. Lawrence", "Financial District"],
     localTips: [
-      "All condo-rentals. Lake-facing units carry a major premium over north-facing units in the same building — sometimes $300-500/mo for the same square footage.",
+      "All condo-rentals. Lake-facing units carry a major premium over north-facing units in the same building, sometimes $300-500/mo for the same square footage.",
       "Walking distance to the Financial District via the PATH means you never need a car or even a coat in winter for the commute.",
       "Gardiner Expressway noise affects lower floors on the north side of buildings. Higher floors are dramatically quieter.",
     ],
@@ -222,7 +222,7 @@ export const TORONTO_HOODS = {
     context: "Rental supply is limited and demand from families and executives keeps prices consistently elevated.",
     nearbyHoods: ["Yorkville", "Midtown", "Annex"],
     localTips: [
-      "Rental supply is genuinely thin — most properties are owner-occupied. Listings move quickly.",
+      "Rental supply is genuinely thin, most properties are owner-occupied. Listings move quickly.",
       "Most rentals are upper floors of large homes or coach houses. Expect quirky layouts, private entrances, and limited tenant history to reference.",
       "St. Clair West and Eglinton subway/streetcar stops are within walking distance from much of the neighbourhood but Forest Hill itself has very limited transit inside its boundaries.",
     ],
